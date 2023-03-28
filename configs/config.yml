@@ -1,0 +1,35 @@
+log:
+  # std|file
+  output: std
+  # trace|debug|info|warn
+  level: info
+  # 是否打印调用者信息
+  caller: true
+  # 日志目录
+  dir: ./log
+#web基础配置
+web:
+  port: 9681
+  #跨域开关
+  cors: true
+#mysql配置
+mysql:
+  #host: localhost
+  host: 192.168.0.82
+  username: super_user
+  password: CSMP@1qaz2wsx
+  dbname: alert
+  port: 30348
+  minconns: 160
+  maxconns: 200
+slave:
+  host: 192.168.0.82
+  username: super_user
+  password: CSMP@1qaz2wsx
+  dbname: alert
+  port: 32149
+  minconns: 160
+  maxconns: 200
+#storepath: ./upload/file
+backend:
+  url: http://192.168.8.122:8100
