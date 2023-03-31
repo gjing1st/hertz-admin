@@ -19,6 +19,8 @@ func (e Err) String() string {
 		return "json解析错误"
 	case HaSysTimeParseErr:
 		return "时间解析错误"
+	case HaSysParamErr:
+		return "参数错误"
 	//用户相关
 	case HaUserNotLogin:
 		return "用户未登录或登录已失效，请重新登录"

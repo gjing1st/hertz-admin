@@ -1,0 +1,75 @@
+basePath: /ha/v1
+definitions:
+  controller.UserController:
+    type: object
+  request.Login:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+host: localhost:9681
+info:
+  contact:
+    name: hertz-contrib
+    url: https://github.com/hertz-contrib
+  description: This is a demo using Hertz.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: HertzAdmin
+  version: "1.0"
+paths:
+  /category/first:
+    get:
+      consumes:
+      - application/json
+      description: 测试Description
+      produces:
+      - application/json
+      responses: {}
+      summary: 测试Summary
+  /category/index:
+    get:
+      description: 测试Description
+      parameters:
+      - description: id主键
+        in: query
+        name: id
+        required: true
+        type: integer
+      responses: {}
+      summary: 测试index
+  /ping:
+    get:
+      consumes:
+      - application/json
+      description: 测试Description
+      produces:
+      - application/json
+      responses: {}
+      summary: 测试index
+  /user/login:
+    post:
+      consumes:
+      - application/json
+      description: 用户登录
+      parameters:
+      - description: 用户名和密码
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.Login'
+      responses:
+        "200":
+          description: 操作成功
+          schema:
+            $ref: '#/definitions/controller.UserController'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: 用户登录
+swagger: "2.0"

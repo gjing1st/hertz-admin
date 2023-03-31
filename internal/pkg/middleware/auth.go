@@ -13,6 +13,12 @@ import (
 	"net/http"
 )
 
+// LoginRequired godoc
+//
+//	@Description	验证token，需要登录
+//	@contact.name	GJing
+//	@contact.email	gjing1st@gmail.com
+//	@date			2023/3/28 22:55
 func LoginRequired() app.HandlerFunc {
 
 	return func(c context.Context, ctx *app.RequestContext) {

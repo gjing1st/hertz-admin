@@ -25,6 +25,15 @@ var Config = struct {
 		MinConns int    `default:"90"`  //连接池最大空闲连接数量 不要太小
 		MaxConns int    `default:"120"` //连接池最大连接数量 两者相差不要太大
 	}
+	Slave struct {
+		Host     string `default:"sample-follower.third"`
+		UserName string `default:"super_user"`
+		Password string `default:"CSMP@1qaz2wsx"`
+		DBName   string `default:"alert"`
+		Port     string `default:"3306"`
+		MinConns int    `default:"90"`  //连接池最小连接数量 不要太小
+		MaxConns int    `default:"120"` //连接池最大连接数量 两者相差不要太大
+	}
 	CrontabTime int `default:"60"`
 	VersionInfo struct {
 		Manufacturer string `default:"xxxx"`
@@ -46,7 +55,7 @@ var Config = struct {
 
 // InitConfig 读取用户的配置文件
 func InitConfig() {
-	err := configor.Load(&Config, "./config/config.yml")
+	err := configor.Load(&Config, "./configs/config.yml")
 	if err != nil {
 		panic("config load error" + err.Error())
 	}

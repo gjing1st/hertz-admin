@@ -13,10 +13,20 @@ import (
 	"github.com/gjing1st/hertz-admin/internal/pkg/config"
 )
 
+// @title HertzAdmin
+// @version 1.0
+// @description This is a demo using Hertz.
+// @contact.name hertz-contrib
+// @contact.url https://github.com/hertz-contrib
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+// @host localhost:9681
+// @BasePath /ha/v1
+// TODO 此处main.go只是为了生成swag文档，使用时尽量从cmd/ha/main.go
+//
 //go:generate go env -w GO111MODULE=on
 //go:generate go env -w GOPROXY=https://goproxy.cn,direct
 //go:generate go mod tidy
-
 func main() {
 	//加载配置文件
 	config.Init()

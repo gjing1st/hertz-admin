@@ -37,6 +37,7 @@ const (
 	HaSysJsonMarshalErr   //转json失败
 	HaSysJsonUnMarshalErr //json解析失败
 	HaSysTimeParseErr     //时间转换错误
+	HaSysParamErr         // 参数错误
 )
 
 const (
