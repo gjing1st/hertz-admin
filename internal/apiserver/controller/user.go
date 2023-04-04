@@ -8,6 +8,7 @@ package controller
 
 import (
 	"context"
+	"fmt"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/gjing1st/hertz-admin/internal/apiserver/model/request"
 	"github.com/gjing1st/hertz-admin/internal/apiserver/model/response"
@@ -33,4 +34,9 @@ func (uc *UserController) Login(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 	response.Ok(c)
+}
+
+func (uc *UserController) LoginTest(ctx context.Context, c *app.RequestContext) {
+	testId := ctx.Value("testId")
+	fmt.Println("testId====", testId)
 }

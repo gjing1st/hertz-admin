@@ -39,6 +39,7 @@ func LoginRequired() app.HandlerFunc {
 		//ctx.Set("userId", userInfo.Id)
 		//ctx.Set("username", userInfo.Name)
 		//ctx.Set("roleId", userInfo.RoleId)
+		c = context.WithValue(c, "testId", 123)
 		ctx.Next(c)
 	}
 }

@@ -29,5 +29,8 @@ func InitApi(h *server.Hertz) {
 		initCategory(apiV1)
 		initUser(apiV1)
 	}
+	{
+		initLoginUser(apiV1)
+	}
 
 }
