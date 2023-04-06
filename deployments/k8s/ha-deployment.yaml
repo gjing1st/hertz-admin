@@ -1,0 +1,74 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: ha-server
+  namespace: test
+  labels:
+    app.kubernetes.io/instance: test
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: ha
+    app.kubesphere.io/instance: test
+    helm.sh/chart: ha-v3.5.0
+  annotations:
+    deployment.kubernetes.io/revision: '14'
+    kubesphere.io/creator: admin
+    meta.helm.sh/release-name: test
+    meta.helm.sh/release-namespace: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: test
+      app.kubernetes.io/name: ha
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/instance: test
+        app.kubernetes.io/name: ha
+      annotations:
+        kubesphere.io/creator: admin
+        logging.kubesphere.io/logsidecar-config: '{}'
+    spec:
+      volumes:
+        - name: host-time
+          hostPath:
+            path: /etc/localtime
+            type: ''
+        - name: volume-ivw9jw
+          configMap:
+            name: ha-server-conf
+            defaultMode: 420
+      containers:
+        - name: ha
+          image: 'core.harbor:30002/test/ha:v3.6.0'
+          ports:
+            - name: http
+              containerPort: 9680
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - name: host-time
+              readOnly: true
+              mountPath: /etc/localtime
+            - name: volume-ivw9jw
+              readOnly: true
+              mountPath: /home/config
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+          securityContext: {}
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      serviceAccountName: ha-server
+      serviceAccount: ha-server
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600

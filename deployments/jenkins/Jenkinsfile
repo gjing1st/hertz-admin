@@ -1,0 +1,69 @@
+pipeline {
+  agent {
+    node {
+      label 'go'
+    }
+
+  }
+  stages {
+    stage('拉取代码') {
+      agent none
+      steps {
+        container('go') {
+          git(url: 'http://your-git-addr:8083/your-project/your-repo.git', credentialsId: 'your-gitlab-secret', branch: '$BRANCH_NAME', changelog: true, poll: false)
+          sh 'ls -l'
+        }
+      }
+    }
+
+    stage('单元测试-编译') {
+      steps {
+        container('go') {
+          sh 'ls -l'
+          sh 'export GOPROXY=https://goproxy.cn '
+        }
+
+      }
+    }
+
+    stage('构建镜像') {
+      agent none
+      steps {
+        container('go') {
+          sh 'docker build -f build/docker/Dockerfile -t  $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:$BRANCH_NAME .'
+        }
+      }
+    }
+
+    stage('推送镜像') {
+      agent none
+      steps {
+        container('go') {
+          withCredentials([usernamePassword(credentialsId : 'harbor' ,passwordVariable : 'DOCKER_PASSWORD' ,usernameVariable : 'DOCKER_USERNAME' ,)]) {
+              sh 'echo "$DOCKER_PASSWORD" | docker login $REGISTRY -u "$DOCKER_USERNAME" --password-stdin'
+              sh 'docker push $REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:$BRANCH_NAME'
+            }
+        }
+      }
+    }
+    stage('发布') {
+         agent none
+         steps {
+           container('go') {
+             withCredentials([kubeconfigContent(credentialsId : 'kubeconfig' ,variable : 'KUBECONFIG_CONFIG' ,)]) {
+               sh 'mkdir -p ~/.kube/'
+               sh 'echo "$KUBECONFIG_CONFIG" > ~/.kube/config'
+               sh ' kubectl delete -f deployments/k8s/ha-deployment.yaml'
+               sh ' kubectl apply -f deployments/k8s/ha-deployment.yaml'
+             }
+           }
+         }
+    }
+
+  }
+  environment {
+    REGISTRY = 'core.harbor:30002'
+    DOCKERHUB_NAMESPACE = 'test'
+    APP_NAME = 'ha'
+  }
+}
