@@ -8,6 +8,7 @@ package database
 import (
 	"database/sql"
 	"fmt"
+	"github.com/gjing1st/hertz-admin/internal/apiserver/store/database/initdata"
 	"github.com/gjing1st/hertz-admin/internal/pkg/config"
 	log "github.com/sirupsen/logrus"
 	"gorm.io/driver/mysql"
@@ -30,6 +31,7 @@ const (
 )
 
 // InitDB
+//
 //	@description:	初始化数据库
 //	@param:
 //	@author:	GJing
@@ -38,8 +40,15 @@ const (
 //	@success:
 func InitDB() {
 	var err error
+	var dsn = MysqlEmptyDsn()
+	createSql := fmt.Sprintf("CREATE DATABASE IF NOT EXISTS `%s` DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_general_ci;", config.Config.Mysql.DBName)
+	// 创建数据库
+	if err = createDatabase(dsn, "mysql", createSql); err != nil {
+		log.WithFields(log.Fields{"err": err.Error()}).Panic(DriverMysql + "数据库创建失败")
+		return
+	}
 	//数据库驱动
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+	dsn = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
 		config.Config.Mysql.UserName,
 		config.Config.Mysql.Password,
 		config.Config.Mysql.Host,
@@ -106,6 +115,7 @@ func InitDB() {
 }
 
 // GetDB
+//
 //	@description:	获取数据库连接
 //	@param:
 //	@author:	GJing
@@ -117,12 +127,13 @@ func GetDB() *gorm.DB {
 		InitDB()
 	}
 	// 初始化表和表数据
-	//initdata.InitData(db)
+	initdata.InitData(db)
 
 	return db
 }
 
 // MysqlEmptyDsn
+//
 //	@description:	mysql配置
 //	@param:
 //	@author:	GJing
@@ -137,6 +148,7 @@ func MysqlEmptyDsn() string {
 }
 
 // createDatabase
+//
 //	@description:	创建数据库
 //	@param:
 //	@author:	GJing

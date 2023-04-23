@@ -3,6 +3,7 @@ module github.com/gjing1st/hertz-admin
 go 1.19
 
 require (
+	github.com/bluele/gcache v0.0.2
 	github.com/bytedance/sonic v1.8.6
 	github.com/cloudwego/hertz v0.6.1
 	github.com/hertz-contrib/cors v0.0.0-20230307061136-1fe747ea6a2a

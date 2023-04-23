@@ -15,12 +15,12 @@ web:
 #mysql配置
 mysql:
   #host: localhost
-  host: 192.168.0.82
+  host: 192.168.240.82
   username: super_user
   password: CSMP@1qaz2wsx
-  dbname: alert
+  dbname: ha
   port: 30348
-  minconns: 160
+  minconns: 150
   maxconns: 200
 slave:
   host: 192.168.0.82

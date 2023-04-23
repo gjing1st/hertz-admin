@@ -17,11 +17,11 @@ var Config = struct {
 		Cors bool   `default:"true"`
 	}
 	Mysql struct {
-		Host     string `default:"114.115.134.131"`
+		Host     string `default:"localhost"`
 		UserName string `default:"root"`
-		Password string `default:"ZPFIZgvCev"`
-		DBName   string `default:"alert"`
-		Port     string `default:"30324"`
+		Password string `default:"123456"`
+		DBName   string `default:"ha"`
+		Port     string `default:"3306"`
 		MinConns int    `default:"90"`  //连接池最大空闲连接数量 不要太小
 		MaxConns int    `default:"120"` //连接池最大连接数量 两者相差不要太大
 	}

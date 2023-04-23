@@ -53,7 +53,7 @@ pipeline {
              withCredentials([kubeconfigContent(credentialsId : 'kubeconfig' ,variable : 'KUBECONFIG_CONFIG' ,)]) {
                sh 'mkdir -p ~/.kube/'
                sh 'echo "$KUBECONFIG_CONFIG" > ~/.kube/config'
-               sh ' kubectl delete -f deployments/k8s/ha-deployment.yaml'
+               sh ' kubectl rollout restart deploy -f deployments/k8s/ha-deployment.yaml'
                sh ' kubectl apply -f deployments/k8s/ha-deployment.yaml'
              }
            }

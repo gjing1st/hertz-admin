@@ -19,13 +19,11 @@ RUN #apk update --no-cache && apk add --no-cache tzdata \
 # && apk add --no-cache  docker-compose
 ##设置本地时区，这样我们在日志里看到的是北京时间了
 #ENV TZ Asia/Shanghai
-
-
-COPY --from=builder  /build/src/config/config.yml /home/config/config.yml
-COPY --from=builder /build/src/ha /home/gaf
 WORKDIR /home
-CMD ["./ha"]
-EXPOSE 9680
+COPY --from=builder  /build/src/configs/config.yml /home/configs/config.yml
+COPY --from=builder /build/src/ha /home/ha
+CMD ["home/ha"]
+#EXPOSE 9681
 
 #docker run  -d --name ha -p 9680:9680 -v /etc/localtime:/etc/localtime ha
 # docker run -d --pid=host --privileged=true -p 9680:9680 -v /etc/sysconfig/network-scripts:/etc/sysconfig/network-scripts -v /etc/localtime:/etc/localtime ha

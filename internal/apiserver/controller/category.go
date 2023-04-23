@@ -12,6 +12,7 @@ import (
 	"github.com/gjing1st/hertz-admin/internal/apiserver/model/request"
 	"github.com/gjing1st/hertz-admin/internal/apiserver/model/response"
 	"github.com/gjing1st/hertz-admin/internal/apiserver/service"
+	"github.com/gjing1st/hertz-admin/internal/apiserver/store/cache"
 	"github.com/gjing1st/hertz-admin/internal/apiserver/store/mysql"
 	"github.com/gjing1st/hertz-admin/pkg/utils"
 )
@@ -78,5 +79,25 @@ func (cc *CategoryController) GetList(ctx context.Context, c *app.RequestContext
 			PageSize: req.PageSize,
 		})
 	}
+
+}
+
+func (cc *CategoryController) Calculate(ctx context.Context, c *app.RequestContext) {
+	sum := 1
+	for i := 0; i < 500000; i++ {
+		sum += i
+	}
+	response.OkWithData(c, sum)
+}
+
+type Cache struct {
+}
+
+func (cc *CategoryController) Cache(ctx context.Context, c *app.RequestContext) {
+	a, err := cache.GetCache().Get("a")
+	if err != nil {
+		cache.GetCache().Set("a", "123123")
+	}
+	response.OkWithData(c, a)
 
 }

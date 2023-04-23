@@ -41,6 +41,7 @@ func Md5(str string) string {
 }
 
 // InArray
+//
 //	@description:	判断一个字符串是否在数组中
 //	@param:
 //	@author:	GJing
@@ -60,6 +61,7 @@ func InArray(value string, arr []string) bool {
 }
 
 // ReserveNumber
+//
 //	@description:	截取保留小数点后m位，舍去后面位数
 //	@param:			f float64
 //	@param:			m 保留的位数
@@ -77,14 +79,14 @@ func ReserveNumber(f float64, m int) string {
 	return s
 }
 
-//	@description:	压缩文件夹
-//	@param:			dir 文件夹路径 ex:F:\project\Go\ChineseMedicine\ChineseMedicine\adminApi\public\image
-//	@param:			zipFile 压缩后的文件夹路径和名称 ex: ./test.zip
-//	@author:		GJing
-//	@email:			gjing1st@gmail.com
-//	@date:			2021/1/13 15:17
-//	@success:
-//	@remark:	相对路径压缩后可能导致里面目录名称错误，可使用绝对路径。具体原因未知。str, _ := os.Getwd()获取当前程序运行所在目录，str拼接相对路径
+// @description:	压缩文件夹
+// @param:			dir 文件夹路径 ex:F:\project\Go\ChineseMedicine\ChineseMedicine\adminApi\public\image
+// @param:			zipFile 压缩后的文件夹路径和名称 ex: ./test.zip
+// @author:		GJing
+// @email:			gjing1st@gmail.com
+// @date:			2021/1/13 15:17
+// @success:
+// @remark:	相对路径压缩后可能导致里面目录名称错误，可使用绝对路径。具体原因未知。str, _ := os.Getwd()获取当前程序运行所在目录，str拼接相对路径
 func zipDir(dir, zipFile string) {
 	// TODO 此加解压有问题，使用中医中最新的加解压
 	fz, err := os.Create(zipFile)
@@ -120,6 +122,7 @@ func zipDir(dir, zipFile string) {
 }
 
 // UnzipDir
+//
 //	@description:	解压缩
 //	@param:zipFile	压缩文件路径 ./test.zip
 //	@param:dir		需要解压到的指定文件夹目录 ex :F:\dumps_copy
@@ -164,6 +167,7 @@ func UnzipDir(zipFile, dir string) {
 }
 
 // Round
+//
 //	@description:	四舍五入保留n位小数
 //	@param:f		需要处理的float数
 //	@param:n		需要保留的小数位数
@@ -212,6 +216,7 @@ func Div(Num int) string {
 }
 
 // UnExt
+//
 //	@description:	返回文件名称去掉后缀和最后一个`.`
 //	@param:			fileName 文件名称
 //	@author:		GJing
@@ -328,6 +333,7 @@ func (c *connection) Exec(cmd string, host Host) (stdout string, code int, err e
 }
 
 // RunCommand
+//
 //	@description:	运行系统命令
 //	@param:			cmdStr 要运行的命令
 //	@author:		GJing
@@ -347,6 +353,7 @@ func RunCommand(name string, arg ...string) (err error) {
 }
 
 // WriteFile
+//
 //	@description:
 //	@param:
 //	@author:	GJing
@@ -369,6 +376,7 @@ func WriteFile(fileName, s string) (err error) {
 }
 
 // PathExists
+//
 //	@description:	判断文件是否存在
 //	@param:
 //	@author:	Zq
@@ -387,6 +395,7 @@ func PathExists(path string) (bool, error) {
 }
 
 // LogField
+//
 //	@description:	日志字段
 //	@param:
 //	@author:	GJing
@@ -401,6 +410,7 @@ func LogField(err error, msg string) log.Fields {
 }
 
 // DiffNatureDays
+//
 //	@description:	两个日期的相差的自然天数
 //	@param:
 //	@author:	GJing
