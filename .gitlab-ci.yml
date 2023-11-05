@@ -1,0 +1,20 @@
+stages:
+  - docker
+
+docker-job:
+  tags:
+    #TODO 需要修改此处对应各自项目的公共runner，避免都用all标签导致阻塞
+    - all
+  stage: docker
+  script:
+    #获取git分支版本，并传给Makefile
+    - VERSION=`echo $CI_COMMIT_REF_NAME | sed 's/\(v[0-9\x2e]*\).*/\1/'`
+    #本次提交最新的记录值
+#    - echo ${CI_COMMIT_SHA}
+    # c8679fbb719994631bc6a9930d41617f7a1b382d 是上一步某次提交的哈希值
+#    - COMMIT_COUNT=$(git rev-list --count e93e5e4b876d5b8d88399b15ec3bbb29a218e7d7..HEAD)
+#    - echo ${COMMIT_COUNT}
+    - make docker VERSION=$VERSION
+#    - make push_docker
+    # 打安装包,默认关闭，看实际产品情况是否要开启
+#    - make install_package VERSION=$VERSION COMMIT_COUNT=$COMMIT_COUNT
