@@ -12,7 +12,7 @@ RUN go env -w GO111MODULE=on \
     && go mod tidy \
     && go build -ldflags="-s -w"  -o ha /build/src/cmd/ha/main.go
 
-FROM alpine:3.16
+FROM alpine:3.19
 #更新软件源  使用挂载卷挂载 /etc/localtime:/etc/localtime做宿主机时间映射
 RUN #apk update --no-cache && apk add --no-cache tzdata \
 # && apk add --no-cache docker-cli \

@@ -15,11 +15,11 @@ func initCategory(r *route.RouterGroup) {
 	api := r.Group("category")
 	categoryController := controller.CategoryController{}
 	//服务器40核64GB 部署单个副本
-	// ping接口 35w+ tps
-	api.GET("first", categoryController.First)   //压测测试使用 6w tps
-	api.GET("index", categoryController.Index)   //压测测试使用 6w tps
-	api.GET("list", categoryController.GetList)  //压测测试使用 表7条数据，5w tps
+	// ping接口 35w+ qps
+	api.GET("first", categoryController.First)   //压测测试使用 6w qps
+	api.GET("index", categoryController.Index)   //压测测试使用 6w qps
+	api.GET("list", categoryController.GetList)  //压测测试使用 表7条数据，5w qps
 	api.GET("cpu", categoryController.Calculate) //压测200数求和测试使用
-	api.GET("cache", categoryController.Cache)   //压测gcache缓存使用   19w tps
+	api.GET("cache", categoryController.Cache)   //压测gcache缓存使用   19w qps
 
 }
