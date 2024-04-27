@@ -26,6 +26,10 @@ make build
 ```shell
 make docker
 ```
+### 推送到镜像仓库
+```shell
+make push_docker
+```
 ## 🎉4 其他说明
 ### 4.1 生成swag 
 ```shell

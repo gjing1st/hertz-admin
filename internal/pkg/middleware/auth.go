@@ -9,7 +9,7 @@ package middleware
 import (
 	"context"
 	"github.com/cloudwego/hertz/pkg/app"
-	"github.com/gjing1st/hertz-admin/internal/pkg/consts"
+	"github.com/gjing1st/hertz-admin/internal/pkg/global"
 	"net/http"
 )
 
@@ -22,8 +22,8 @@ import (
 func LoginRequired() app.HandlerFunc {
 
 	return func(c context.Context, ctx *app.RequestContext) {
-		token := ctx.GetHeader(consts.HeaderAuthorization)
-		if len(token) < len(consts.AuthPre) {
+		token := ctx.GetHeader(global.HeaderAuthorization)
+		if len(token) < len(global.AuthPre) {
 			ctx.AbortWithMsg("请携带token认证", http.StatusUnauthorized)
 			return
 		}

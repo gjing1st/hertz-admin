@@ -8,26 +8,26 @@ log:
   # 日志目录
   dir: ./log
 #web基础配置
-web:
+base:
   port: 9681
-  #跨域开关
-  cors: true
-#mysql配置
-mysql:
-  #host: localhost
-  host: 192.168.240.82
-  username: super_user
-  password: CSMP@1qaz2wsx
+  #数据库类型
+  dbtype: mysql
+  cachetype: redis
+#数据库配置
+database:
+  host: 192.168.8.206
+  username: root
+  password: root123456
   dbname: ha
-  port: 30348
+  port: 32321
   minconns: 150
   maxconns: 200
 slave:
-  host: 192.168.0.82
-  username: super_user
-  password: CSMP@1qaz2wsx
+  host: 192.168.8.206
+  username: root
+  password: root123456
   dbname: alert
-  port: 32149
+  port: 32321
   minconns: 160
   maxconns: 200
 #storepath: ./upload/file

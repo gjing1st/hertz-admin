@@ -2,6 +2,7 @@ package apiserver
 
 import (
 	"fmt"
+	"github.com/cloudwego/hertz/pkg/app/middlewares/server/recovery"
 	"github.com/cloudwego/hertz/pkg/app/server"
 	_ "github.com/gjing1st/hertz-admin/docs"
 	v1 "github.com/gjing1st/hertz-admin/internal/apiserver/router/v1"
@@ -10,7 +11,6 @@ import (
 	"github.com/hertz-contrib/swagger"
 	log "github.com/sirupsen/logrus"
 	swaggerFiles "github.com/swaggo/files"
-	"time"
 )
 
 // HttpStart
@@ -32,21 +32,12 @@ func HttpStart() {
 func run() {
 	h := server.Default(
 		server.WithHandleMethodNotAllowed(true),
-		server.WithHostPorts(fmt.Sprintf(":%s", config.Config.Web.Port)),
+		server.WithHostPorts(fmt.Sprintf(":%s", config.Config.Base.Port)),
 		//server.WithTransport(standard.NewTransporter),
 	)
-	//是否跨域
-	if config.Config.Web.Cors {
-		h.Use(cors.New(cors.Config{
-			AllowAllOrigins:  true,
-			AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
-			AllowHeaders:     []string{"Origin"},
-			ExposeHeaders:    []string{"Content-Length"},
-			AllowCredentials: true,
-			MaxAge:           12 * time.Hour,
-		}))
+	//注册中间件
+	registerMiddleware(h)
 
-	}
 	//url := swagger.URL("http://localhost:9681/swagger/doc.json") // The url pointing to API definition
 	h.GET("/swagger/*any", swagger.WrapHandler(swaggerFiles.Handler))
 	{
@@ -54,6 +45,30 @@ func run() {
 	}
 
 	//启动gin路由服务
-	log.Println("端口号：", config.Config.Web.Port)
+	log.Println("端口号：", config.Config.Base.Port)
 	h.Spin()
+}
+
+func registerMiddleware(h *server.Hertz) {
+
+	//// pprof
+	//if conf.GetConf().Hertz.EnablePprof {
+	//	pprof.Register(h)
+	//}
+	//
+	//// gzip
+	//if conf.GetConf().Hertz.EnableGzip {
+	//	h.Use(gzip.Gzip(gzip.DefaultCompression))
+	//}
+	//
+	//// access log
+	//if conf.GetConf().Hertz.EnableAccessLog {
+	//	h.Use(accesslog.New())
+	//}
+
+	// recovery
+	h.Use(recovery.Recovery())
+
+	// cores
+	h.Use(cors.Default())
 }
