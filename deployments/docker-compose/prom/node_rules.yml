@@ -1,0 +1,11 @@
+groups:
+- name: node_rules
+  rules:
+  - record: cpu
+    expr: 100-(avg by (instance)(irate(node_cpu_seconds_total{mode="idle"}[5m]))*100)
+  - record: memory
+    expr: (1 - (node_memory_MemAvailable_bytes / (node_memory_MemTotal_bytes)))*100
+  - record: start_run_time
+    expr: node_boot_time
+  - record: disk
+    expr: max((node_filesystem_size_bytes{fstype=~"ext.?|xfs"}-node_filesystem_free_bytes{fstype=~"ext.?|xfs"}) *100/(node_filesystem_avail_bytes {fstype=~"ext.?|xfs"}+(node_filesystem_size_bytes{fstype=~"ext.?|xfs"}-node_filesystem_free_bytes{fstype=~"ext.?|xfs"})))by(instance)

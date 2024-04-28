@@ -1,0 +1,62 @@
+version: '3'
+services:
+  opengauss:
+    image: enmotech/opengauss:5.0.0
+    container_name: admin-opengauss
+    restart: unless-stopped
+    #    ports:
+    #      - "15432:5432"
+    privileged: true
+    environment:
+      - GS_PASSWORD=Dked@123
+    volumes:
+      - /home/app/admin/backup:/home/app/admin/backup
+      - /home/app/admin/opengauss:/var/lib/opengauss
+    networks:
+      - adminnet
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500m"
+  backend:
+    image: admin-backend:v1.0.0
+    container_name: admin-backend
+    restart: unless-stopped
+    privileged: true
+    pid: host
+#    ports:
+#      - "9685:9680"
+    depends_on:
+      - opengauss
+    volumes:
+      - /home/app/admin/config:/home/config
+      - /etc/localtime:/etc/localtime
+      - /opt/tnaengine/update:/opt/tnaengine/update
+      - /etc/sysconfig/network-scripts:/etc/sysconfig/network-scripts
+    networks:
+      - csopnet
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500m"
+  frontend:
+    image: admin-frontend:v1.0.0
+    container_name: admin-frontend
+    restart: unless-stopped
+    volumes:
+      - /home/app/admin/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "9633:80"
+    depends_on:
+      - backend
+    networks:
+      - adminnet
+    privileged: true
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500m"
+networks:
+  adminnet:
+    driver:
+      bridge
