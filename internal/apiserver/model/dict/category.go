@@ -1,6 +1,6 @@
 // Path: internal/apiserver/model/dict
 // FileName: category.go
-// Created by dkedTeam
+// Created by bestTeam
 // Author: GJing
 // Date: 2023/4/23$ 17:55$
 

@@ -1,6 +1,6 @@
 // Path: internal/apiserver/router
 // FileName: init.go
-// Created by dkedTeam
+// Created by bestTeam
 // Author: GJing
 // Date: 2023/3/28$ 21:58$
 
@@ -24,8 +24,14 @@ func InitApi(h *server.Hertz) {
 	apiV1.GET("ping", func(c context.Context, ctx *app.RequestContext) {
 		ctx.JSON(consts.StatusOK, "pong")
 	})
-
+	apiV1.GET("sys/status", func(c context.Context, ctx *app.RequestContext) {
+		ctx.JSON(consts.StatusOK, nil)
+	})
+	apiV1.GET("sys/run", func(c context.Context, ctx *app.RequestContext) {
+		ctx.JSON(consts.StatusOK, nil)
+	})
 	{
+		initWithoutConfigRouter(apiV1)
 		initCategory(apiV1)
 		initUser(apiV1)
 	}

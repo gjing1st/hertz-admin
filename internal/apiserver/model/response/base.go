@@ -1,20 +1,27 @@
 // Path: internal/apiserver/model/response
 // FileName: base.go
-// Created by dkedTeam
+// Created by bestTeam
 // Author: GJing
 // Date: 2023/3/29$ 14:02$
 
 package response
 
 import (
+	"encoding/json"
+	"errors"
 	"github.com/cloudwego/hertz/pkg/app"
+	"github.com/gjing1st/hertz-admin/internal/apiserver/model/dict"
+	"github.com/gjing1st/hertz-admin/internal/apiserver/model/entity"
+	"github.com/gjing1st/hertz-admin/internal/apiserver/store/database"
 	"github.com/gjing1st/hertz-admin/pkg/errcode"
+	"github.com/gjing1st/hertz-admin/pkg/utils"
 	"net/http"
+	"strconv"
 )
 
 // Response 响应格式
 type Response struct {
-	Code errcode.Err `json:"code"`
+	Code error       `json:"code"`
 	Data interface{} `json:"data"`
 	Msg  string      `json:"msg"`
 }
@@ -27,6 +34,14 @@ type PageResult struct {
 	PageSize int         `json:"page_size"`
 }
 
+func Result(code error, data interface{}, c *app.RequestContext) {
+	c.JSON(http.StatusOK, Response{
+		code,
+		data,
+		code.Error(),
+	})
+}
+
 // OkWithData
 // @params
 // @Description 请求处理成功，返回响应200
@@ -34,23 +49,7 @@ type PageResult struct {
 // @contact.email gjing1st@gmail.com
 // @date 2023/3/31 19:02
 func OkWithData(c *app.RequestContext, data interface{}) {
-	//res := Response{
-	//	errcode.SuccessCode,
-	//	data,
-	//	errcode.SuccessCode.String(),
-	//}
-	//resByte, err := sonic.Marshal(res)
-	//if err != nil {
-	//	Fail(c, errcode.HaSysJsonMarshalErr)
-	//	return
-	//}
-	//c.Response.SetStatusCode(http.StatusOK)
-	//c.Response.SetBody(resByte)
-	c.JSON(http.StatusOK, Response{
-		errcode.SuccessCode,
-		data,
-		errcode.SuccessCode.String(),
-	})
+	Result(errcode.SuccessCode, data, c)
 }
 
 // Ok
@@ -60,26 +59,143 @@ func OkWithData(c *app.RequestContext, data interface{}) {
 // @contact.email gjing1st@gmail.com
 // @date 2023/3/31 20:00
 func Ok(c *app.RequestContext) {
-	c.JSON(http.StatusOK, Response{
-		errcode.SuccessCode,
-		nil,
-		errcode.SuccessCode.String(),
-	})
+	Result(errcode.SuccessCode, nil, c)
 }
 
-// Fail
+// Failed
 // @Description 请求失败，影响返回500
 // @params
 // @contact.name GJing
 // @contact.email gjing1st@gmail.com
 // @date 2023/3/31 19:56
-func Fail(c *app.RequestContext, code errcode.Err) {
+func Failed(c *app.RequestContext, code error) {
 	res := Response{
 		code,
 		nil,
-		code.String(),
+		code.Error(),
 	}
 	c.JSON(http.StatusInternalServerError, res)
+}
+
+// FailWithLog
+// @description: 返回操作失败，并记录失败日志
+// @param:
+// @author: GJing
+// @email: gjing1st@gmail.com
+// @date: 2022/12/27 16:20
+// @success:
+func FailWithLog(err error, content string, req interface{}, c *app.RequestContext) {
+	code, ok := err.(error)
+	if !ok {
+		code = errcode.ErrCode
+	}
+	c.JSON(http.StatusInternalServerError, Response{
+		code,
+		nil,
+		code.Error(),
+	})
+	var sysLog entity.SysLog
+	sysLog.Result = dict.AdminLogResultFail
+	sysLog.ClientIP = c.ClientIP()
+	sysLog.Content = content
+	userName, _ := c.Get("username")
+	username := utils.String(userName)
+	//if username == global.SuperAdmin {
+	//	return
+	//}
+	sysLog.Username = username
+	reqJson, _ := json.Marshal(req)
+	sysLog.RequestData = string(reqJson)
+	database.SysLogDB{}.Create(nil, &sysLog)
+}
+
+// FailWithDataLog
+// @description:
+// @param:
+// @author: GJing
+// @email: gjing1st@gmail.com
+// @date: 2023/2/9 17:48
+// @success:
+func FailWithDataLog(data interface{}, err error, content string, req interface{}, c *app.RequestContext) {
+	code, ok := err.(error)
+	if !ok {
+		code = errcode.ErrCode
+	}
+	msg := code.Error()
+	if errors.Is(err, errcode.UKeyPwdErr) || errors.Is(err, errcode.PwdErr) {
+		res := data.(UserLogin)
+		if res.RetryCount > 0 {
+			msg = msg + strconv.Itoa(res.RetryCount)
+		} else {
+			msg = "密码输入错误次数过多，已锁定"
+		}
+	}
+	c.JSON(http.StatusInternalServerError, Response{
+		code,
+		data,
+		msg,
+	})
+	var sysLog entity.SysLog
+	sysLog.Result = dict.AdminLogResultFail
+	sysLog.ClientIP = c.ClientIP()
+	sysLog.Content = content
+	userName, _ := c.Get("username")
+	username := utils.String(userName)
+	//if username == global.SuperAdmin {
+	//	return
+	//}
+	sysLog.Username = username
+	reqJson, _ := json.Marshal(req)
+	sysLog.RequestData = string(reqJson)
+	database.SysLogDB{}.Create(nil, &sysLog)
+}
+
+// OkWithLog
+// @description: 返回操作成功并记录操作日志
+// @param:
+// @author: GJing
+// @email: gjing1st@gmail.com
+// @date: 2022/12/27 16:16
+// @success:
+func OkWithLog(content string, req interface{}, c *app.RequestContext) {
+	Result(errcode.SuccessCode, nil, c)
+	var sysLog entity.SysLog
+	sysLog.Result = dict.SysLogResultOk
+	sysLog.ClientIP = c.ClientIP()
+	sysLog.Content = content
+	userName, _ := c.Get("username")
+	username := utils.String(userName)
+	//if username == global.SuperAdmin {
+	//	return
+	//}
+	sysLog.Username = username
+	reqJson, _ := json.Marshal(req)
+	sysLog.RequestData = string(reqJson)
+	database.SysLogDB{}.Create(nil, &sysLog)
+}
+
+// OkWithDataLog
+// @description: 返回操作成功并记录操作日志
+// @param:
+// @author: GJing
+// @email: gjing1st@gmail.com
+// @date: 2022/12/27 17:30
+// @success:
+func OkWithDataLog(data interface{}, content string, req interface{}, c *app.RequestContext) {
+	Result(errcode.SuccessCode, data, c)
+	var sysLog entity.SysLog
+	sysLog.Result = dict.AdminLogResultOk
+	sysLog.ClientIP = c.ClientIP()
+	sysLog.Content = content
+	userName, _ := c.Get("username")
+	username := utils.String(userName)
+	//if username == global.SuperAdmin {
+	//	return
+	//}
+	sysLog.Username = username
+	reqJson, _ := json.Marshal(req)
+	sysLog.RequestData = string(reqJson)
+	_ = database.SysLogDB{}.Create(nil, &sysLog)
 }
 
 // ParamErr
@@ -92,6 +208,44 @@ func ParamErr(c *app.RequestContext) {
 	c.JSON(http.StatusBadRequest, Response{
 		errcode.HaSysParamErr,
 		nil,
-		errcode.HaSysParamErr.String(),
+		errcode.HaSysParamErr.Error(),
+	})
+}
+
+// Unauthorized
+// @description: 未登录的错误
+// @param:
+// @author: GJing
+// @email: gjing1st@gmail.com
+// @date: 2022/12/28 18:02
+// @success:
+func Unauthorized(err error, c *app.RequestContext) {
+	code, ok := err.(error)
+	if !ok {
+		code = errcode.ErrCode
+	}
+	c.JSON(http.StatusUnauthorized, Response{
+		code,
+		nil,
+		code.Error(),
+	})
+}
+
+// Forbidden
+// @description: 没有权限
+// @param:
+// @author: GJing
+// @email: gjing1st@gmail.com
+// @date: 2022/12/28 18:05
+// @success:
+func Forbidden(err error, c *app.RequestContext) {
+	code, ok := err.(error)
+	if !ok {
+		code = errcode.ErrCode
+	}
+	c.JSON(http.StatusForbidden, Response{
+		code,
+		nil,
+		code.Error(),
 	})
 }

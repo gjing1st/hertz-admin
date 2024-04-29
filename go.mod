@@ -6,6 +6,7 @@ require (
 	github.com/bluele/gcache v0.0.2
 	github.com/bytedance/sonic v1.8.6
 	github.com/cloudwego/hertz v0.8.1
+	github.com/google/uuid v1.6.0
 	github.com/hertz-contrib/cors v0.0.0-20230307061136-1fe747ea6a2a
 	github.com/hertz-contrib/swagger v0.0.0-20220711030440-b6402d4709f0
 	github.com/jinzhu/configor v1.2.1
@@ -16,7 +17,7 @@ require (
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 	gorm.io/driver/mysql v1.4.7
 	gorm.io/gorm v1.24.6
-	gorm.io/plugin/dbresolver v1.4.1
+	gorm.io/plugin/soft_delete v1.2.1
 )
 
 require (

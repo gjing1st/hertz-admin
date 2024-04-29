@@ -1,6 +1,6 @@
 // Path: cmd/ha
 // FileName: main.go
-// Created by dkedTeam
+// Created by bestTeam
 // Author: GJing
 // Date: 2023/3/28$ 21:03$
 
@@ -9,7 +9,6 @@ package main
 import (
 	"github.com/gjing1st/hertz-admin/internal/apiserver"
 	"github.com/gjing1st/hertz-admin/internal/apiserver/store"
-	"github.com/gjing1st/hertz-admin/internal/apiserver/store/database"
 	"github.com/gjing1st/hertz-admin/internal/pkg/config"
 )
 
@@ -31,7 +30,7 @@ func main() {
 	//加载配置文件
 	config.Init()
 	//加载数据库驱动并初始化数据
-	store.DB = database.GetDB()
+	store.DB = store.GetDB()
 	if store.DB != nil {
 		db, _ := store.DB.DB()
 		// 程序结束前关闭数据库链接

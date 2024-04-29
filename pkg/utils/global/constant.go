@@ -1,6 +1,6 @@
 // Path: pkg/utils/global
 // FileName: constant.go
-// Created by dkedTeam
+// Created by bestTeam
 // Author: GJing
 // Date: 2022/11/16$ 11:13$
 

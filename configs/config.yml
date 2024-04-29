@@ -1,3 +1,10 @@
+#基础配置
+base:
+  port: 9680
+  #数据库类型 mysql,postgresql,opengauss,kingbase,clickhouse,sqlite,dm(达梦)
+  dbtype: mysql
+  #缓存类型 gcache,redis(暂未使用)
+  cachetype: gcache
 log:
   # std|file
   output: std
@@ -7,12 +14,6 @@ log:
   caller: true
   # 日志目录
   dir: ./log
-#web基础配置
-base:
-  port: 9681
-  #数据库类型
-  dbtype: mysql
-  cachetype: redis
 #数据库配置
 database:
   host: 192.168.8.206

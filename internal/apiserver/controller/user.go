@@ -1,6 +1,6 @@
 // Path: internal/apiserver/controller
 // FileName: user.go
-// Created by dkedTeam
+// Created by bestTeam
 // Author: GJing
 // Date: 2023/3/31$ 19:38$
 
@@ -8,14 +8,19 @@ package controller
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/gjing1st/hertz-admin/internal/apiserver/model/request"
 	"github.com/gjing1st/hertz-admin/internal/apiserver/model/response"
+	"github.com/gjing1st/hertz-admin/internal/apiserver/service"
+	"github.com/gjing1st/hertz-admin/pkg/errcode"
 )
 
 type UserController struct {
 }
+
+var userService = service.UserService{}
 
 // Login godoc
 // @Summary 用户登录
@@ -28,12 +33,23 @@ type UserController struct {
 // @Failure 500 {object} string
 // @Router /user/login [post]
 func (uc *UserController) Login(ctx context.Context, c *app.RequestContext) {
-	var p request.Login
-	if err := c.Bind(&p); err != nil {
+	var req request.UserLogin
+	if err := c.Bind(&req); err != nil {
 		response.ParamErr(c)
 		return
 	}
-	response.Ok(c)
+	res, err := userService.Login(&req)
+	content := "登录"
+	if err != nil {
+		if errors.Is(err, errcode.UserNotFound) {
+			response.FailWithLog(err, content, nil, c)
+			return
+		}
+		//response.FailWithLog(errCode, global.LoginFail, req.Name, content, nil, c)
+		response.FailWithDataLog(res, err, content, nil, c)
+	} else {
+		response.OkWithDataLog(res, content, nil, c)
+	}
 }
 
 func (uc *UserController) LoginTest(ctx context.Context, c *app.RequestContext) {

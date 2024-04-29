@@ -1,6 +1,6 @@
 // Path: internal/pkg/middleware
 // FileName: auth.go
-// Created by dkedTeam
+// Created by bestTeam
 // Author: GJing
 // Date: 2023/3/28$ 22:22$
 
@@ -9,8 +9,12 @@ package middleware
 import (
 	"context"
 	"github.com/cloudwego/hertz/pkg/app"
-	"github.com/gjing1st/hertz-admin/internal/pkg/global"
 	"net/http"
+)
+
+const (
+	headerAuthorization = "Authorization"
+	authPre             = "Bearer "
 )
 
 // LoginRequired godoc
@@ -20,10 +24,9 @@ import (
 //	@contact.email	gjing1st@gmail.com
 //	@date			2023/3/28 22:55
 func LoginRequired() app.HandlerFunc {
-
 	return func(c context.Context, ctx *app.RequestContext) {
-		token := ctx.GetHeader(global.HeaderAuthorization)
-		if len(token) < len(global.AuthPre) {
+		token := ctx.GetHeader(headerAuthorization)
+		if len(token) < len(authPre) {
 			ctx.AbortWithMsg("请携带token认证", http.StatusUnauthorized)
 			return
 		}

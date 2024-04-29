@@ -1,6 +1,6 @@
 // Path: pkg/errcode
 // FileName: code_test.go
-// Created by dkedTeam
+// Created by bestTeam
 // Author: GJing
 // Date: 2023/3/28$ 21:29$
 
@@ -14,7 +14,7 @@ import (
 
 func TestCodeString(t *testing.T) {
 	e := JsonMarshal()
-	fmt.Println(e.String())
+	fmt.Println(e.Error())
 }
 
 func JsonMarshal() (e Err) {

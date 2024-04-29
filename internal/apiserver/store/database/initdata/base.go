@@ -1,6 +1,6 @@
 // Path: internal/apiserver/store/database/system
 // FileName: base.go
-// Created by dkedTeam
+// Created by bestTeam
 // Author: GJing
 // Date: 2022/10/31$ 18:20$
 
@@ -29,6 +29,9 @@ func registerTables(db *gorm.DB) {
 	err := db.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(
 		//系统模块表
 		entity.Category{},
+		entity.Config{},
+		entity.User{},
+		entity.SysLog{},
 		//自动化模块表
 
 	)
@@ -73,6 +76,8 @@ func initTableData(db *gorm.DB) (err error) {
 	initTables = append(initTables,
 		//此处添加需要初始化的实现表
 		InitCategory{},
+		InitConfig{},
+		InitUser{},
 	)
 
 	for _, init := range initTables {

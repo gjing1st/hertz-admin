@@ -11,6 +11,7 @@ import (
 	"github.com/hertz-contrib/swagger"
 	log "github.com/sirupsen/logrus"
 	swaggerFiles "github.com/swaggo/files"
+	"time"
 )
 
 // HttpStart
@@ -31,10 +32,18 @@ func HttpStart() {
 // @success:
 func run() {
 	h := server.Default(
-		server.WithHandleMethodNotAllowed(true),
+		//server.WithHandleMethodNotAllowed(true),
 		server.WithHostPorts(fmt.Sprintf(":%s", config.Config.Base.Port)),
 		//server.WithTransport(standard.NewTransporter),
 	)
+
+	//h.Use(cors.New(cors.Config{
+	//	AllowOrigins:     []string{"*"},                      // 允许所有来源
+	//	AllowMethods:     []string{"GET", "POST", "OPTIONS"}, // 允许的 HTTP 方法
+	//	AllowHeaders:     []string{"*"},                      // 允许所有请求头
+	//	AllowCredentials: true,                               // 允许发送身份凭证，如 Cookies
+	//	MaxAge:           12 * time.Hour,                               // 预检请求的有效期
+	//}))
 	//注册中间件
 	registerMiddleware(h)
 
@@ -69,6 +78,13 @@ func registerMiddleware(h *server.Hertz) {
 	// recovery
 	h.Use(recovery.Recovery())
 
-	// cores
-	h.Use(cors.Default())
+	// cors
+	h.Use(cors.New(cors.Config{
+		AllowAllOrigins:  true,
+		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"},
+		AllowHeaders:     []string{"*"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
+
 }

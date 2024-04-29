@@ -1,6 +1,6 @@
 // Path: internal/apiserver/controller
 // FileName: category.go
-// Created by dkedTeam
+// Created by bestTeam
 // Author: GJing
 // Date: 2022/10/30$ 20:26$
 
@@ -12,7 +12,7 @@ import (
 	"github.com/gjing1st/hertz-admin/internal/apiserver/model/request"
 	"github.com/gjing1st/hertz-admin/internal/apiserver/model/response"
 	"github.com/gjing1st/hertz-admin/internal/apiserver/service"
-	"github.com/gjing1st/hertz-admin/internal/apiserver/store/cache"
+	"github.com/gjing1st/hertz-admin/internal/apiserver/store"
 	"github.com/gjing1st/hertz-admin/internal/apiserver/store/mysql"
 	"github.com/gjing1st/hertz-admin/pkg/utils"
 )
@@ -94,9 +94,9 @@ type Cache struct {
 }
 
 func (cc *CategoryController) Cache(ctx context.Context, c *app.RequestContext) {
-	a, err := cache.GetCache().Get("a")
+	a, err := store.GetCache().Get("a")
 	if err != nil {
-		cache.GetCache().Set("a", "123123")
+		store.GetCache().Set("a", "123123")
 	}
 	response.OkWithData(c, a)
 

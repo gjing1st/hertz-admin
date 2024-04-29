@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"github.com/jinzhu/configor"
 )
 
@@ -25,9 +24,11 @@ var Config = struct {
 }{}
 
 type Base struct {
-	DBType    string `default:"mysql"`
-	CacheType string `default:"gcache"`
-	Port      string `default:"9680"`
+	DBType          string `default:"mysql"`
+	CacheType       string `default:"gcache"`
+	Port            string `default:"9680"`
+	EnableIntegrity bool   `default:"true"`
+	PwdMaxErrNum    int    `default:"5"`
 }
 type Log struct {
 	Output string `default:"std"`  //日志输出，标准输出或文件
@@ -70,6 +71,4 @@ func InitConfig() {
 	if err != nil {
 		panic("config load error" + err.Error())
 	}
-	fmt.Println("---------------", Config.Base.DBType)
-	fmt.Println("---------------", Config.Database.Port)
 }

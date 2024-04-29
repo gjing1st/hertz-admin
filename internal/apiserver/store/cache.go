@@ -1,10 +1,10 @@
-// Path: internal/apiserver/store/cache
-// FileName: gcache.go
-// Created by dkedTeam
+// Path: internal/apiserver/store/database
+// FileName: cache.go
+// Created by bestTeam
 // Author: GJing
-// Date: 2023/4/7$ 23:35$
+// Date: 2022/12/27$ 11:10$
 
-package cache
+package store
 
 import (
 	"github.com/bluele/gcache"
@@ -13,13 +13,14 @@ import (
 
 var gc gcache.Cache
 
-func init() {
+func Init() gcache.Cache {
 	gc = gcache.New(200).
 		ARC().
 		Expiration(time.Hour * 8).
 		Build()
+	return gc
 }
 
 func GetCache() gcache.Cache {
-	return gc
+	return Init()
 }
