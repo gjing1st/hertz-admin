@@ -24,18 +24,15 @@ func InitApi(h *server.Hertz) {
 	apiV1.GET("ping", func(c context.Context, ctx *app.RequestContext) {
 		ctx.JSON(consts.StatusOK, "pong")
 	})
-	apiV1.GET("sys/status", func(c context.Context, ctx *app.RequestContext) {
-		ctx.JSON(consts.StatusOK, nil)
-	})
-	apiV1.GET("sys/run", func(c context.Context, ctx *app.RequestContext) {
-		ctx.JSON(consts.StatusOK, nil)
-	})
 	{
+		//无需登录即可访问
 		initWithoutConfigRouter(apiV1)
 		initCategory(apiV1)
 		initUser(apiV1)
 	}
 	{
+		//需要登录才能访问
+		initSys(apiV1)
 		initLoginUser(apiV1)
 	}
 

@@ -14,6 +14,7 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
+	"github.com/gjing1st/hertz-admin/internal/pkg/functions"
 	"github.com/gjing1st/hertz-admin/pkg/utils/global"
 	log "github.com/sirupsen/logrus"
 	"io"
@@ -21,6 +22,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"strconv"
 	"strings"
 	"sync"
@@ -441,4 +443,94 @@ func DiffNatureDays(t1, t2 int64) int {
 	}
 
 	return diffDays
+}
+
+// DockerRunCommand
+// @description: docker容器执行宿主机指令
+// @param:
+// @author: GJing
+// @email: gjing1st@gmail.com
+// @date: 2023/2/11 13:46
+// @success:
+func DockerRunCommand(command string) (err error) {
+	/*
+	   nsenter命令是一个可以在指定进程的命令空间下运行指定程序的命令，位于util-linux包中  。该命令作为容器向宿主机发送命令的关键部分 。
+	   使用格式：nsenter -a -t <pid> <command> 或者nsenter -m -u -i -n -p -t <pid> <command> ；
+	    -a表示进入宿主机的所有命名空间 , -t 表示获取/proc/{pid}进程 ，liniux旧版本可能不支持。
+	   需要使用 -m -u -i -n -p 。 -m -u -i -n -p，表示进入mount, UTS,System V IPC,网络,pid命名空间,
+	   这几个命名空间包含了绝大多数的空间环境。
+	*/
+	cmd := exec.Command("nsenter", "-m", "-u", "-i", "-n", "-p", "-t", "1", "sh", "-c", command)
+	log.Debug("DockerRunCommand==", cmd.String())
+	var stderr bytes.Buffer
+	cmd.Stderr = &stderr
+	err = cmd.Run()
+	if err != nil {
+		//log.Println("运行系统命令错误", err, ":", stderr.String())
+		functions.AddErrLog(log.Fields{"msg": "运行系统命令错误", "cmd": cmd.String(), "err": stderr.String()})
+		return
+	}
+	return
+}
+
+// VersionCompare
+// @description: 版本比较，v2版本是否大于v1版本
+// @param: v1 string 当前版本
+// @param: v2 string 最新版本
+// @author: GJing
+// @email: gjing1st@gmail.com
+// @date: 2023/2/16 14:41
+// @success: v2>v1返回true
+func VersionCompare(v1, v2 string) (res bool) {
+	if len(v1) == 0 {
+		return true
+	}
+	if len(v2) == 0 {
+		return false
+	}
+	if v1[0] == 'v' || v1[0] == 'V' {
+		v1 = v1[1:]
+	}
+	if v2[0] == 'v' || v2[0] == 'V' {
+		v2 = v2[1:]
+	}
+	v1Arr := strings.Split(v1, ".")
+	v2Arr := strings.Split(v2, ".")
+	//判断是否可升级
+	if len(v1Arr) >= 3 && len(v2Arr) >= 3 {
+		if Int(v2Arr[0]) > Int(v1Arr[0]) {
+			res = true
+			return
+		} else if Int(v2Arr[0]) < Int(v1Arr[0]) {
+			return
+		}
+		if Int(v2Arr[1]) > Int(v1Arr[1]) {
+			res = true
+			return
+		} else if Int(v2Arr[1]) < Int(v1Arr[1]) {
+			return
+		}
+		if Int(v2Arr[2]) > Int(v1Arr[2]) {
+			res = true
+			return
+		} else if Int(v2Arr[2]) < Int(v1Arr[2]) {
+			return
+		}
+		if Int(v2Arr[3]) > Int(v1Arr[3]) {
+			res = true
+			return
+		}
+	}
+	return
+}
+
+// IsValidIP
+// @Description 验证IP是否有效
+// @params
+// @contact.name GJing
+// @contact.email gjing1st@gmail.com
+// @date 2023/6/12 18:41
+func IsValidIP(ip string) bool {
+	pattern := regexp.MustCompile(`^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$`)
+	return pattern.MatchString(ip)
 }
