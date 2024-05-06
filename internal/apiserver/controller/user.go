@@ -15,6 +15,7 @@ import (
 	"github.com/gjing1st/hertz-admin/internal/apiserver/model/response"
 	"github.com/gjing1st/hertz-admin/internal/apiserver/service"
 	"github.com/gjing1st/hertz-admin/pkg/errcode"
+	"strings"
 )
 
 type UserController struct {
@@ -55,4 +56,22 @@ func (uc *UserController) Login(ctx context.Context, c *app.RequestContext) {
 func (uc *UserController) LoginTest(ctx context.Context, c *app.RequestContext) {
 	testId := ctx.Value("testId")
 	fmt.Println("testId====", testId)
+}
+
+// Logout godoc
+// @Summary 登出
+// @Description
+// @contact.name GJing
+// @contact.email gjing1st@gmail.com
+// @Accept application/json
+// @Success 200 {object} string "操作成功"
+// @Failure 500 {object} string
+// @Router /user/logout [post]
+func (uc *UserController) Logout(ctx context.Context, c *app.RequestContext) {
+	auth := c.GetHeader("Authorization")
+	token := strings.Replace(string(auth), "Bearer ", "", 1)
+	service.TokenService{}.RemoveToken(token)
+	content := "登出"
+	response.OkWithLog("", content, c)
+
 }
