@@ -16,11 +16,11 @@ log:
   dir: ./log
 #数据库配置
 database:
-  host: 192.168.8.206
+  host: localhost
   username: root
-  password: root123456
+  password: root
   dbname: ha
-  port: 32321
+  port: 3306
   minconns: 150
   maxconns: 200
 slave:

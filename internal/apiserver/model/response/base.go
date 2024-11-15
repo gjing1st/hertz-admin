@@ -94,19 +94,7 @@ func FailWithLog(err error, content string, req interface{}, c *app.RequestConte
 		nil,
 		code.Error(),
 	})
-	var sysLog entity.SysLog
-	sysLog.Result = dict.AdminLogResultFail
-	sysLog.ClientIP = c.ClientIP()
-	sysLog.Content = content
-	userName, _ := c.Get("username")
-	username := utils.String(userName)
-	//if username == global.SuperAdmin {
-	//	return
-	//}
-	sysLog.Username = username
-	reqJson, _ := json.Marshal(req)
-	sysLog.RequestData = string(reqJson)
-	database.SysLogDB{}.Create(nil, &sysLog)
+	RecordLog(content, req, c)
 }
 
 // FailWithDataLog
@@ -135,19 +123,7 @@ func FailWithDataLog(data interface{}, err error, content string, req interface{
 		data,
 		msg,
 	})
-	var sysLog entity.SysLog
-	sysLog.Result = dict.AdminLogResultFail
-	sysLog.ClientIP = c.ClientIP()
-	sysLog.Content = content
-	userName, _ := c.Get("username")
-	username := utils.String(userName)
-	//if username == global.SuperAdmin {
-	//	return
-	//}
-	sysLog.Username = username
-	reqJson, _ := json.Marshal(req)
-	sysLog.RequestData = string(reqJson)
-	database.SysLogDB{}.Create(nil, &sysLog)
+	RecordLog(content, req, c)
 }
 
 // OkWithLog
@@ -159,19 +135,7 @@ func FailWithDataLog(data interface{}, err error, content string, req interface{
 // @success:
 func OkWithLog(content string, req interface{}, c *app.RequestContext) {
 	Result(errcode.SuccessCode, nil, c)
-	var sysLog entity.SysLog
-	sysLog.Result = dict.SysLogResultOk
-	sysLog.ClientIP = c.ClientIP()
-	sysLog.Content = content
-	userName, _ := c.Get("username")
-	username := utils.String(userName)
-	//if username == global.SuperAdmin {
-	//	return
-	//}
-	sysLog.Username = username
-	reqJson, _ := json.Marshal(req)
-	sysLog.RequestData = string(reqJson)
-	database.SysLogDB{}.Create(nil, &sysLog)
+	RecordLog(content, req, c)
 }
 
 // OkWithDataLog
@@ -183,19 +147,8 @@ func OkWithLog(content string, req interface{}, c *app.RequestContext) {
 // @success:
 func OkWithDataLog(data interface{}, content string, req interface{}, c *app.RequestContext) {
 	Result(errcode.SuccessCode, data, c)
-	var sysLog entity.SysLog
-	sysLog.Result = dict.AdminLogResultOk
-	sysLog.ClientIP = c.ClientIP()
-	sysLog.Content = content
-	userName, _ := c.Get("username")
-	username := utils.String(userName)
-	//if username == global.SuperAdmin {
-	//	return
-	//}
-	sysLog.Username = username
-	reqJson, _ := json.Marshal(req)
-	sysLog.RequestData = string(reqJson)
-	_ = database.SysLogDB{}.Create(nil, &sysLog)
+	RecordLog(content, req, c)
+
 }
 
 // ParamErr
@@ -248,4 +201,24 @@ func Forbidden(err error, c *app.RequestContext) {
 		nil,
 		code.Error(),
 	})
+}
+
+func RecordLog(content string, req interface{}, c *app.RequestContext) {
+	go func() {
+		var sysLog entity.SysLog
+		sysLog.Result = dict.AdminLogResultOk
+		sysLog.ClientIP = c.ClientIP()
+		sysLog.Content = content
+		userName, _ := c.Get("username")
+		username := utils.String(userName)
+		//if username == global.SuperAdmin {
+		//	return
+		//}
+		sysLog.Username = username
+		reqJson, _ := json.Marshal(req)
+		sysLog.RequestData = string(reqJson)
+		//sysLog.Address = ip.GetAddress(c.ClientIP())
+		_ = database.SysLogDB{}.Create(nil, &sysLog)
+	}()
+
 }

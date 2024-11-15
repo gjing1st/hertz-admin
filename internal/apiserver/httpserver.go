@@ -1,9 +1,12 @@
 package apiserver
 
 import (
+	"context"
 	"fmt"
+	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/middlewares/server/recovery"
 	"github.com/cloudwego/hertz/pkg/app/server"
+	"github.com/cloudwego/hertz/pkg/common/hlog"
 	_ "github.com/gjing1st/hertz-admin/docs"
 	v1 "github.com/gjing1st/hertz-admin/internal/apiserver/router/v1"
 	"github.com/gjing1st/hertz-admin/internal/pkg/config"
@@ -11,6 +14,7 @@ import (
 	"github.com/hertz-contrib/swagger"
 	log "github.com/sirupsen/logrus"
 	swaggerFiles "github.com/swaggo/files"
+	"net/http"
 	"time"
 )
 
@@ -36,7 +40,7 @@ func run() {
 		server.WithHostPorts(fmt.Sprintf(":%s", config.Config.Base.Port)),
 		//server.WithTransport(standard.NewTransporter),
 	)
-
+	h.Use(requestLogger)
 	//h.Use(cors.New(cors.Config{
 	//	AllowOrigins:     []string{"*"},                      // 允许所有来源
 	//	AllowMethods:     []string{"GET", "POST", "OPTIONS"}, // 允许的 HTTP 方法
@@ -51,6 +55,7 @@ func run() {
 	h.GET("/swagger/*any", swagger.WrapHandler(swaggerFiles.Handler))
 	{
 		v1.InitApi(h) //v1版本相关接口
+
 	}
 
 	//启动gin路由服务
@@ -58,8 +63,23 @@ func run() {
 	h.Spin()
 }
 
-func registerMiddleware(h *server.Hertz) {
+// requestLogger 是一个中间件，用于打印请求的 URL 和方法
+func requestLogger(ctx context.Context, c *app.RequestContext) {
+	start := time.Now()
+	c.Next(ctx)
+	latency := time.Since(start)
+	hlog.CtxTracef(ctx, "|%s %3d %s| %13v | %15s |%s %-7s %s| %20s | %s ",
+		StatusCodeColor(c.Response.StatusCode()), c.Response.StatusCode(), reset,
+		latency,
+		c.ClientIP(),
+		MethodColor(string(c.Request.Header.Method())), c.Request.Header.Method(), reset,
+		c.Request.Host(),
+		c.Request.URI().PathOriginal(),
+	)
 
+}
+
+func registerMiddleware(h *server.Hertz) {
 	//// pprof
 	//if conf.GetConf().Hertz.EnablePprof {
 	//	pprof.Register(h)
@@ -87,4 +107,51 @@ func registerMiddleware(h *server.Hertz) {
 		MaxAge:           12 * time.Hour,
 	}))
 
+}
+
+func StatusCodeColor(code int) string {
+
+	switch {
+	case code >= http.StatusOK && code < http.StatusMultipleChoices:
+		return green
+	case code >= http.StatusMultipleChoices && code < http.StatusBadRequest:
+		return white
+	case code >= http.StatusBadRequest && code < http.StatusInternalServerError:
+		return yellow
+	default:
+		return red
+	}
+}
+
+const (
+	green   = "\033[97;42m"
+	white   = "\033[90;47m"
+	yellow  = "\033[90;43m"
+	red     = "\033[97;41m"
+	blue    = "\033[97;44m"
+	magenta = "\033[97;45m"
+	cyan    = "\033[97;46m"
+	reset   = "\033[0m"
+)
+
+func MethodColor(method string) string {
+
+	switch method {
+	case http.MethodGet:
+		return blue
+	case http.MethodPost:
+		return cyan
+	case http.MethodPut:
+		return yellow
+	case http.MethodDelete:
+		return red
+	case http.MethodPatch:
+		return green
+	case http.MethodHead:
+		return magenta
+	case http.MethodOptions:
+		return white
+	default:
+		return reset
+	}
 }

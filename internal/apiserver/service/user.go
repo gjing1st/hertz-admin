@@ -7,7 +7,6 @@
 package service
 
 import (
-	"github.com/gjing1st/hertz-admin/internal/apiserver/model/dict"
 	"github.com/gjing1st/hertz-admin/internal/apiserver/model/entity"
 	"github.com/gjing1st/hertz-admin/internal/apiserver/model/request"
 	"github.com/gjing1st/hertz-admin/internal/apiserver/model/response"
@@ -15,7 +14,6 @@ import (
 	"github.com/gjing1st/hertz-admin/internal/pkg/config"
 	"github.com/gjing1st/hertz-admin/internal/pkg/functions"
 	"github.com/gjing1st/hertz-admin/pkg/errcode"
-	"github.com/gjing1st/hertz-admin/pkg/utils"
 	"github.com/gjing1st/hertz-admin/pkg/utils/gm"
 	log "github.com/sirupsen/logrus"
 )
@@ -33,14 +31,6 @@ var userDB = database.UserDB{}
 // @date: 2022/12/27 15:58
 // @success:
 func (us *UserService) Create(req *request.UserCreate) (err error) {
-	var cs ConfigService
-	loginType, errCode1 := cs.GetValueStr(dict.ConfigLoginType)
-	if errCode1 != nil {
-		return errCode1
-	}
-	if utils.Int(loginType) == dict.LoginTypeBackendUKey {
-
-	}
 	err = us.CreateUser(req)
 	return
 }
@@ -191,14 +181,6 @@ func (us *UserService) DeleteById(userid int) (errCode error) {
 // @date: 2023/3/17 16:18
 // @success:
 func (us *UserService) DeleteUser(req *request.UserDelete) (errCode error) {
-	var cs ConfigService
-	loginType, errCode1 := cs.GetValueStr(dict.ConfigLoginType)
-	if errCode1 != nil {
-		return errCode1
-	}
-	if utils.Int(loginType) == dict.LoginTypeBackendUKey {
-		//后端key登录
-	}
 	errCode = userDB.DeleteById(nil, req.ID)
 	return
 }
