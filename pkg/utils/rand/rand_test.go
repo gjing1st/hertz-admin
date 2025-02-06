@@ -9,27 +9,29 @@ package rand
 import (
 	"fmt"
 	"testing"
+	"time"
 )
 
 func TestStr(t *testing.T) {
-	s := Str("1234567890", 5)
-	fmt.Println(s)
-	n := Intn(2)
-	fmt.Println(n)
-	aa := S(10, false)
-	fmt.Println(aa)
+	t1 := time.Now()
+	for range 10 {
+		//time.Sleep(time.Nanosecond)
+		s := GoogleUUID32()
+		fmt.Println(s)
+	}
+	//time.Sleep(time.Nanosecond)
+	fmt.Println(time.Since(t1))
 }
 
 func BenchmarkGoogleUUID20(b *testing.B) {
 	for i := 0; i < b.N; i++ {
+		//S(20, false)
+		generateRandomString(20)
 	}
-}
-func TestGenerateRuleName(t *testing.T) {
-	fmt.Println(GenerateRuleName())
 }
 
 func BenchmarkName(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		GenerateRuleName()
+		GoogleUUID20()
 	}
 }
