@@ -7,7 +7,7 @@
 package functions
 
 import (
-	backend "github.com/gjing1st/hertz-admin"
+	"github.com/gjing1st/hertz-admin/version"
 	log "github.com/sirupsen/logrus"
 	"runtime"
 	"strconv"
@@ -25,7 +25,7 @@ func AddErrLog(errMsg log.Fields) {
 	//go func() {
 	_, file, lineNo, _ := runtime.Caller(1)
 	errMsg["log_file"] = file + ":" + strconv.Itoa(lineNo)
-	log.WithFields(errMsg).Error(backend.ProjectName)
+	log.WithFields(errMsg).Error(version.GetAppName())
 	//}()
 }
 
@@ -34,7 +34,7 @@ func AddWarnLog(errMsg log.Fields) {
 	//go func() {
 	_, file, lineNo, _ := runtime.Caller(1)
 	errMsg["log_file"] = file + ":" + strconv.Itoa(lineNo)
-	log.WithFields(errMsg).Warn(backend.ProjectName)
+	log.WithFields(errMsg).Warn(version.GetAppName())
 	//}()
 }
 
@@ -49,7 +49,7 @@ func AddInfoLog(fields log.Fields) {
 	//go func() {
 	_, file, lineNo, _ := runtime.Caller(1)
 	fields["log_file"] = file + ":" + strconv.Itoa(lineNo)
-	log.WithFields(fields).Info(backend.ProjectName)
+	log.WithFields(fields).Info(version.GetAppName())
 	//}()
 }
 
@@ -64,6 +64,6 @@ func AddDebugLog(fields log.Fields) {
 	//go func() {
 	_, file, lineNo, _ := runtime.Caller(1)
 	fields["log_file"] = file + ":" + strconv.Itoa(lineNo)
-	log.WithFields(fields).Debug(backend.ProjectName)
+	log.WithFields(fields).Debug(version.GetAppName())
 	//}()
 }
