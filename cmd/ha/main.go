@@ -7,9 +7,11 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gjing1st/hertz-admin/internal/apiserver"
 	"github.com/gjing1st/hertz-admin/internal/apiserver/store"
 	"github.com/gjing1st/hertz-admin/internal/pkg/config"
+	"github.com/gjing1st/hertz-admin/version"
 )
 
 // @title HertzAdmin
@@ -27,6 +29,7 @@ import (
 //go:generate go env -w GOPROXY=https://goproxy.cn,direct
 //go:generate go mod tidy
 func main() {
+	fmt.Println("ha-version：", version.GetVersion())
 	//加载配置文件
 	config.Init()
 	//加载数据库驱动并初始化数据
