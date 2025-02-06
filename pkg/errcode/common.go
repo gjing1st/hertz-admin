@@ -73,3 +73,8 @@ const (
 	SysTimeParseErr                           //时间转换错误
 	SysSaveFileErr                            //保存文件错误
 )
+
+const (
+	IdCardErr       = 6*CommonCode + iota
+	IdCardNumberErr //身份证号错误
+)

@@ -29,6 +29,7 @@ func InitApi(h *server.Hertz) {
 		initWithoutConfigRouter(apiV1)
 		initCategory(apiV1)
 		initUser(apiV1)
+		initIdCard(apiV1)
 	}
 	{
 		//需要登录才能访问

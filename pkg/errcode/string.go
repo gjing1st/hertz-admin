@@ -85,6 +85,8 @@ func (e Err) Error() string {
 		return "操作失败"
 	case ValueErr:
 		return "数值错误"
+	case IdCardNumberErr:
+		return "身份证号错误"
 	}
 
 	return "未知错误"
