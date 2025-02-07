@@ -18,21 +18,43 @@ REPOSITORY := 192.168.1.1:443/$(IMAGE_NAME)/$(IMAGE_NAME)-backend
 #保存的镜像存放的目录
 TARGET_DIR := /opt/build-host/ha-server/$(IMAGE_TAG)
 
+#
+# Go.
+#
+# Use GOPROXY environment variable if set
+GOPROXY := $(shell go env GOPROXY)
+ifeq ($(GOPROXY),)
+GOPROXY := https://goproxy.cn,direct
+endif
+export GOPROXY
+# This option is for running docker manifest command
+export DOCKER_CLI_EXPERIMENTAL := enabled
+
+# Active module mode, as we use go modules to manage dependencies
+export GO111MODULE=on
+# Set build time variables including version details
+LDFLAGS := $(shell version/version.sh)
+
+.PHONY: help
+help: ## 使用帮助.
+	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n\nTargets:\n"} /^[0-9A-Za-z_-]+:.*?##/ { printf "  \033[36m%-45s\033[0m %s\n", $$1, $$2 } /^\$$\([0-9A-Za-z_-]+\):.*?##/ { gsub("_","-", $$1); printf "  \033[36m%-45s\033[0m %s\n", tolower(substr($$1, 3, length($$1)-7)), $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
+
 # 运行
 .PHONY: run
-run:
+run: ## 运行服务
 	@echo "Building image with tag '$(IMAGE_TAG)'"
 	go run cmd/ha/main.go
 
 .PHONY: build
-build:
-	go build -o ha cmd/ha/main.go
+build: ## 编译二进制文件
+	go build -trimpath  -ldflags "$(LDFLAGS)" -o ha cmd/ha/main.go
+
 # 打包成docker镜像 make docker VERSION=v1.1.0
 .PHONY: docker
 TAG := $(IMAGE_NAME):$(IMAGE_TAG)
-docker:
+docker: ## 打包成docker镜像
 	@echo "Building image with tag '$(TAG)'"
-	docker build --build-arg APP_VERSION=$(IMAGE_TAG) -f ./build/docker/Dockerfile -t $(TAG) .
+	docker build --build-arg LDFLAGS="$(LDFLAGS)" -f ./build/docker/Dockerfile -t $(TAG) .
 	#如果运行在gitlab runner可能创建/opt/build-host/ha-server 权限不足，需要到服务器手动创建项目目录，并将目录权限更改为gitlab-runner
 	# chown -R gitlab-runner:gitlab-runner ./opt/build-host/***
 	mkdir -p $(TARGET_DIR)
@@ -43,7 +65,7 @@ docker:
 
 # 推送到镜像仓库
 .PHONY: push_docker
-push_docker:
+push_docker: ## 推送到镜像仓库
 	@echo "Pushing image with tag '$(IMAGE_NAME):$(IMAGE_TAG)' to repository '$(REPOSITORY):$(IMAGE_TAG)'"
 	docker tag $(IMAGE_NAME):$(IMAGE_TAG) $(REPOSITORY):$(IMAGE_TAG)
 	docker login -u admin -p 123456 192.168.1.1:443
@@ -51,5 +73,5 @@ push_docker:
 
 #生成swag接口文档
 .PHONY: swag
-swag:
+swag: ## 生成swag接口文档
 	swag init -g ./cmd/ha/main.go

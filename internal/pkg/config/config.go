@@ -40,7 +40,7 @@ type Log struct {
 type Database struct {
 	Host     string `default:"localhost"`
 	UserName string `default:"root"`
-	Password string `default:"123456"`
+	Password string `default:"root"`
 	DBName   string `default:"ha"`
 	Port     string `default:"3306"`
 	MinConns int    `default:"90"`  //连接池最大空闲连接数量 不要太小

@@ -201,7 +201,7 @@ func MysqlEmptyDsn() string {
 // @date: 2022/10/26 18:15
 // @success:
 func createDatabase(dsn string, driver string, createSql string) error {
-	db, err := sql.Open(driver, dsn)
+	db1, err := sql.Open(driver, dsn)
 	if err != nil {
 		return err
 	}
@@ -210,11 +210,11 @@ func createDatabase(dsn string, driver string, createSql string) error {
 		if err != nil {
 			fmt.Println(err)
 		}
-	}(db)
-	if err = db.Ping(); err != nil {
+	}(db1)
+	if err = db1.Ping(); err != nil {
 		return err
 	}
-	_, err = db.Exec(createSql)
+	_, err = db1.Exec(createSql)
 	return err
 }
 

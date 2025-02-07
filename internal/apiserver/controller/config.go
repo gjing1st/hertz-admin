@@ -12,6 +12,7 @@ import (
 	"github.com/gjing1st/hertz-admin/internal/apiserver/model/dict"
 	"github.com/gjing1st/hertz-admin/internal/apiserver/model/response"
 	"github.com/gjing1st/hertz-admin/internal/apiserver/service"
+	"github.com/gjing1st/hertz-admin/version"
 )
 
 type ConfigController struct {
@@ -55,4 +56,16 @@ func (cc ConfigController) LoginType(ctx context.Context, c *app.RequestContext)
 	var res response.LoginTypeRes
 	res.LoginType = v
 	response.OkWithData(c, res)
+}
+
+// GetVersion
+// @description: 获取版本信息
+// @param:
+// @author: GJing
+// @email: gjing1st@gmail.com
+// @date: 2025/2/7 上午11:00
+// @success:
+func (cc ConfigController) GetVersion(ctx context.Context, c *app.RequestContext) {
+	v := version.Get()
+	response.OkWithData(c, v)
 }

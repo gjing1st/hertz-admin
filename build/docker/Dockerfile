@@ -1,8 +1,7 @@
 ARG GO_VERSION=1.23.0
 ARG ALPINE_VERSION=3.20
 FROM  golang:${GO_VERSION}-alpine${ALPINE_VERSION} AS build
-# 定义项目版本,在Makefile中传入
-ARG APP_VERSION=1.0.0
+ARG LDFLAGS
 WORKDIR /src
 ENV GOPROXY https://goproxy.cn,direct
 RUN --mount=type=cache,target=/go/pkg/mod/ \
@@ -11,7 +10,7 @@ RUN --mount=type=cache,target=/go/pkg/mod/ \
     go mod download -x
 RUN --mount=type=cache,target=/go/pkg/mod/ \
     --mount=type=bind,target=. \
-    CGO_ENABLED=0 GOOS=linux  go build -ldflags="-s -w -X github.com/gjing1st/hertz-admin/version.version=${APP_VERSION}" -o /bin/server ./cmd/ha/main.go
+    CGO_ENABLED=0 GOOS=linux  go build -trimpath -ldflags="-s -w ${LDFLAGS}" -o /bin/server ./cmd/ha/main.go
 
 FROM alpine:${ALPINE_VERSION}
 COPY --from=build /bin/server /bin/
