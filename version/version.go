@@ -5,7 +5,6 @@ import (
 	"runtime"
 )
 
-var version string
 var appName = "ha-server"
 
 func GetAppName() string {

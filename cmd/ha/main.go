@@ -33,6 +33,7 @@ func main() {
 	v := version.Get()
 	y, _ := json.MarshalIndent(&v, "", "  ")
 	fmt.Println("ha-version: ", string(y))
+
 	//加载配置文件
 	config.Init()
 	//加载数据库驱动并初始化数据
