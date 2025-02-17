@@ -15,6 +15,6 @@ func initWithoutConfigRouter(apiV1 *route.RouterGroup) {
 	configController := controller.ConfigController{}
 	apiV1.GET("init/step", configController.GetInitStep) //初始化状态步骤
 	apiV1.GET("login-type", configController.LoginType)  //登录方式
-	apiV1.GET("version", configController.GetVersion)    //登录方式
+	apiV1.GET("version", configController.GetVersion)    //版本信息
 
 }

@@ -22,7 +22,7 @@ var (
 // @description: 注册数据库表专用。每次启动程序以entity实体为准，比对数据库表进行创建新增修改字段。
 // @param: db *gorm.DB
 // @author: GJing
-// @email: guojing@tna.cn
+// @email: gjing1st@gmail.com
 // @date: 2022/10/11 17:00
 // @success:
 func registerTables(db *gorm.DB) {

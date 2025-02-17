@@ -22,7 +22,7 @@ const tokenPrefix = "admin:"
 // @description: 生成token
 // @param:
 // @author: GJing
-// @email: guojing@tna.cn
+// @email: gjing1st@gmail.com
 // @date: 2022/4/15 14:37
 // @success:
 func (td TokenService) GenerateToken(u *entity.UserTokenInfo) (token string, errCode error) {

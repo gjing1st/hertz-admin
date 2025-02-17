@@ -183,7 +183,7 @@ func GetDB() *gorm.DB {
 // @description: mysql配置
 // @param:
 // @author: GJing
-// @email: guojing@tna.cn
+// @email: gjing1st@gmail.com
 // @date: 2022/10/26 18:15
 // @success:
 func MysqlEmptyDsn() string {
@@ -197,7 +197,7 @@ func MysqlEmptyDsn() string {
 // @description: 创建数据库
 // @param:
 // @author: GJing
-// @email: guojing@tna.cn
+// @email: gjing1st@gmail.com
 // @date: 2022/10/26 18:15
 // @success:
 func createDatabase(dsn string, driver string, createSql string) error {
@@ -245,7 +245,7 @@ func createKingBaseDsn() string {
 // @description: 创建postgres数据库
 // @param:
 // @author: GJing
-// @email: guojing@tna.cn
+// @email: gjing1st@gmail.com
 // @date: 2023/1/11 18:15
 // @success:
 func createPostgresqlDatabase(dsn, createSql string) error {

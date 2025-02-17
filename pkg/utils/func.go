@@ -222,7 +222,7 @@ func Div(Num int) string {
 //	@description:	返回文件名称去掉后缀和最后一个`.`
 //	@param:			fileName 文件名称
 //	@author:		GJing
-//	@email:			guojing@tna.cn
+//	@email:			gjing1st@gmail.com
 //	@date:			2022/7/28 15:39
 //	@success:
 func UnExt(fileName string) string {
@@ -339,7 +339,7 @@ func (c *connection) Exec(cmd string, host Host) (stdout string, code int, err e
 //	@description:	运行系统命令
 //	@param:			cmdStr 要运行的命令
 //	@author:		GJing
-//	@email:			guojing@tna.cn
+//	@email:			gjing1st@gmail.com
 //	@date:			2022/9/2 17:46
 //	@success:
 func RunCommand(name string, arg ...string) (err error) {
@@ -359,7 +359,7 @@ func RunCommand(name string, arg ...string) (err error) {
 //	@description:
 //	@param:
 //	@author:	GJing
-//	@email:		guojing@tna.cn
+//	@email:		gjing1st@gmail.com
 //	@date:		2022/9/2 17:52
 //	@success:
 func WriteFile(fileName, s string) (err error) {

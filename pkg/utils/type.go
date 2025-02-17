@@ -11,10 +11,11 @@ import (
 )
 
 // Int
+//
 //	@description:	转int
 //	@param:
 //	@author:	GJing
-//	@email:		guojing@tna.cn
+//	@email:		gjing1st@gmail.com
 //	@date:		2022/4/22 11:13
 //	@success:
 func Int(any interface{}) int {
@@ -37,10 +38,11 @@ func Int(any interface{}) int {
 }
 
 // String
+//
 //	@description:	转string类型
 //	@param:			any 接口类型
 //	@author:		GJing
-//	@email:			guojing@tna.cn
+//	@email:			gjing1st@gmail.com
 //	@date:			2022/4/22 11:11
 //	@success:		字符串
 func String(any interface{}) string {
@@ -125,10 +127,11 @@ func String(any interface{}) string {
 }
 
 // Int64
+//
 //	@description:	接口类型转int64
 //	@param:			any 接口类型
 //	@author:		GJing
-//	@email:			guojing@tna.cn
+//	@email:			gjing1st@gmail.com
 //	@date:			2022/4/22 10:56
 //	@success:		int64
 func Int64(any interface{}) int64 {
@@ -213,10 +216,11 @@ func Int64(any interface{}) int64 {
 }
 
 // Float64
+//
 //	@description:	接口类型转float64
 //	@param:			any 接口类型
 //	@author:		GJing
-//	@email:			guojing@tna.cn
+//	@email:			gjing1st@gmail.com
 //	@date:			2022/4/22 10:44
 //	@success:		float64
 func Float64(any interface{}) float64 {

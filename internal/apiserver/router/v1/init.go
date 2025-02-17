@@ -32,8 +32,7 @@ func InitApi(h *server.Hertz) {
 	}
 	{
 		//需要登录才能访问
-		initSys(apiV1)
-		initLoginUser(apiV1)
+		initLoginRouter(apiV1)
 	}
 
 }
