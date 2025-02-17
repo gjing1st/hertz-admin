@@ -31,7 +31,7 @@ type User struct {
 	PwdUpdatedAt time.Time             `json:"-"  gorm:"column:pwd_updated_at;comment:密码更新时间;"`
 	CheckData    string                `json:"-"  gorm:"column:check_data;comment:完整性校验;"`
 	CreatedAt    time.Time             `json:"created_at"`
-	UpdatedAt    time.Time             `json:"updated_at"`
+	UpdatedAt    time.Time             `json:"updated_at,omitzero"`
 	DeletedAt    soft_delete.DeletedAt `json:"-"`
 	//DeletedAt     soft_delete.DeletedAt `gorm:"uniqueIndex:user_name" json:"-"`
 }

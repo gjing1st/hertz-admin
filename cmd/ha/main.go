@@ -19,11 +19,11 @@ import (
 // @version 1.0
 // @description This is a demo using Hertz.
 // @contact.name gjing1st@gmail.com
-// @contact.url http://tna.cn
+// @contact.url http://zdhr.top
 // @contact.email gjing1st@gmail.com
 // @license.name Apache 2.0
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
-// @host localhost:9681
+// @host localhost:9680
 // @BasePath /ha/v1
 //
 //go:generate go env -w GO111MODULE=on
