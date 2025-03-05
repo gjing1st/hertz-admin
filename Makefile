@@ -34,6 +34,7 @@ export DOCKER_CLI_EXPERIMENTAL := enabled
 export GO111MODULE=on
 # Set build time variables including version details
 LDFLAGS := $(shell version/version.sh)
+GIT_VERSION=$(shell git describe --tags --abbrev=14 --match "v[0-9]*" 2>/dev/null | sed 's/^v//')
 
 .PHONY: help
 help: ## 使用帮助.
@@ -51,16 +52,12 @@ build: ## 编译二进制文件
 
 # 打包成docker镜像 make docker VERSION=v1.1.0
 .PHONY: docker
-TAG := $(IMAGE_NAME):$(IMAGE_TAG)
+TAG := $(IMAGE_NAME):v$(GIT_VERSION)
 docker: ## 打包成docker镜像
 	@echo "Building image with tag '$(TAG)'"
 	docker build --build-arg LDFLAGS="$(LDFLAGS)" -f ./build/docker/Dockerfile -t $(TAG) .
-	#如果运行在gitlab runner可能创建/opt/build-host/ha-server 权限不足，需要到服务器手动创建项目目录，并将目录权限更改为gitlab-runner
-	# chown -R gitlab-runner:gitlab-runner ./opt/build-host/***
-	mkdir -p $(TARGET_DIR)
-	#docker save -o $(TARGET_DIR)/$(IMAGE_NAME)-$(IMAGE_TAG).tar $(TAG)
-	docker save -o $(TARGET_DIR)/$(IMAGE_NAME).tar $(TAG)
-	gzip -f $(TARGET_DIR)/$(IMAGE_NAME).tar
+	docker save -o ./build/$(IMAGE_NAME).tar $(TAG)
+	gzip -f ./build/$(IMAGE_NAME).tar
 	docker image prune -f
 
 # 推送到镜像仓库

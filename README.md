@@ -3,6 +3,8 @@
 ### 1.1 项目简介
 基于字节hertz的后台管理框架,整体架构布局采用 `51k` Star的 `https://github.com/golang-standards/project-layout` 规范
 ## 🚀2 使用说明
+- 镜像版本和软件版本，使用git tag进行版本控制。
+- 若需要使用git分支版本，请修改version/version.sh和Makefile中GIT_VERSION。
 ### 直接打包
 go build cmd/ha/main.go
 ### docker打包
