@@ -27,13 +27,6 @@ func (e Err) Error() string {
 		//用户相关
 	case NoToken, TokenExpired:
 		return "请重新登录"
-	// 高级配置模块
-	case UpdateFileErr, UpdateFileReadErr:
-		return "升级包有误"
-	case UpdateFileLoadErr:
-		return "升级包镜像导入错误"
-	case UpdateAssistErr:
-		return "请求助手升级失败"
 	// 系统运行中的缓存错误
 	case SysCacheErr:
 		return "缓存错误"
@@ -63,20 +56,8 @@ func (e Err) Error() string {
 		return "密码输入错误，剩余次数："
 	case PwdMaxErr:
 		return "密码错误次数过多，账号已锁定"
-	case UKeyUserNotFound:
-		return "用户不存在"
-	case UKeyOpenErr, UKeyNotExist:
-		return "请把UKey插入服务器"
-	case UKeySerialErr:
-		return "UKey序列号错误"
-	case UKeyPwdErr:
-		return "PIN输入错误，剩余次数："
 	case MAXAdmin:
 		return "管理员数量已达最大限制"
-	case UKeyCertErr, UKeyParseErr, UKeyValidateErr, UKeyUsernameErr:
-		return "新增失败"
-	case UKeyAddUsernameErr:
-		return "UKey用户名错误"
 	case UserNameExist:
 		return "当前用户已注册，新增失败"
 	case DBErr, DBCreateErr, DBFindErr, DBUpdateErr, DBDeleteErr:

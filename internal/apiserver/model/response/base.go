@@ -110,7 +110,7 @@ func FailWithDataLog(data interface{}, err error, content string, req interface{
 		code = errcode.ErrCode
 	}
 	msg := code.Error()
-	if errors.Is(err, errcode.UKeyPwdErr) || errors.Is(err, errcode.PwdErr) {
+	if errors.Is(err, errcode.PwdErr) {
 		res := data.(UserLogin)
 		if res.RetryCount > 0 {
 			msg = msg + strconv.Itoa(res.RetryCount)

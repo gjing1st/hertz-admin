@@ -37,33 +37,9 @@ const (
 	PwdMaxErr                           //密码错误次数过多已锁定
 )
 
-// UKey错误
-const (
-	UKeyNotExist       = 3*CommonCode + iota //UKey不存在
-	UKeyOpenErr                              //UKey打开失败
-	UKeySerialErr                            //UKey序列号错误
-	UKeyUserNotFound                         //UKey用户不存在
-	UKeyPwdErr                               //密码错误
-	UKeyCertErr                              //证书错误
-	UKeyParseErr                             //证书解析错误
-	UKeyValidateErr                          //UKey认证失败
-	UKeyUsernameErr                          //UKey用户名不匹配
-	UKeyAddUsernameErr                       //UKey用户名不匹配
-)
-
-// 请求第三方
-const (
-	ThirdRequestErr = 4*CommonCode + iota
-	TnaAuthErr
-	UpdateFileErr     //升级包名称错误
-	UpdateFileReadErr //升级包目录中文件读取错误
-	UpdateFileLoadErr //升级包镜像导入错误
-	UpdateAssistErr   // 请求助手升级失败
-)
-
 // 系统运行中的错误
 const (
-	SysCacheErr         = 5*CommonCode + iota //缓存错误
+	SysCacheErr         = 3*CommonCode + iota //缓存错误
 	SysCacheGetErr                            //缓存获取错误
 	SysCacheSetErr                            //缓存获取错误
 	SysCmdErr                                 //执行宿主机cmd指令出错
@@ -75,6 +51,6 @@ const (
 )
 
 const (
-	IdCardErr       = 6*CommonCode + iota
+	IdCardErr       = 4*CommonCode + iota
 	IdCardNumberErr //身份证号错误
 )
