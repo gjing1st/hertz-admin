@@ -75,3 +75,21 @@ func (uc *UserController) Logout(ctx context.Context, c *app.RequestContext) {
 	response.OkWithLog("", content, c)
 
 }
+
+func (uc *UserController) Register(ctx context.Context, c *app.RequestContext) {
+	var req request.UserRegister
+	if err := c.BindJSON(&req); err != nil {
+		response.ParamErr(c)
+		return
+	}
+
+	err := userService.Register(&req)
+	ctx = context.WithValue(ctx, "content", "用户注册")
+	ctx = context.WithValue(ctx, "req", req)
+	ctx = context.WithValue(ctx, "err", err)
+	if err != nil {
+		response.FailWithLog(err, "用户注册", req, c)
+		return
+	}
+	response.OkWithDataLog("", "用户注册", req, c)
+}

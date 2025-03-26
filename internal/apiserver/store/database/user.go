@@ -8,11 +8,9 @@ package database
 
 import (
 	"errors"
-	"fmt"
 	"github.com/gjing1st/hertz-admin/internal/apiserver/model/entity"
 	"github.com/gjing1st/hertz-admin/internal/apiserver/model/request"
 	"github.com/gjing1st/hertz-admin/internal/apiserver/store"
-	"github.com/gjing1st/hertz-admin/internal/pkg/config"
 	"github.com/gjing1st/hertz-admin/internal/pkg/functions"
 	errcode "github.com/gjing1st/hertz-admin/pkg/errcode"
 	log "github.com/sirupsen/logrus"
@@ -39,7 +37,7 @@ func (um UserDB) Create(tx *gorm.DB, user *entity.User) (id uint, errCode error)
 	}
 	//user.NickName, _ = store.EncodeString(user.NickName)
 	//user.Name, _ = store.EncodeString(user.Name)
-	user.CheckData = um.computeUserCheckData(user)
+	//user.CheckData = um.computeUserCheckData(user)
 	err := tx.Create(&user).Error
 	if err != nil {
 		functions.AddErrLog(log.Fields{"err": err, "msg": "mysql创建管理员失败"})
@@ -67,10 +65,10 @@ func (um UserDB) GetByName(name string) (user *entity.User, errCode error) {
 	}
 	//user.NickName, _ = store.DecodeString(user.NickName)
 	//user.Name, _ = store.DecodeString(user.Name)
-	hashStr := um.computeUserCheckData(user)
-	if hashStr != user.CheckData {
-		functions.AddWarnLog(log.Fields{"msg": "该条数据完整性校验不通过，存在篡改嫌疑", "user": user})
-	}
+	//hashStr := um.computeUserCheckData(user)
+	//if hashStr != user.CheckData {
+	//	functions.AddWarnLog(log.Fields{"msg": "该条数据完整性校验不通过，存在篡改嫌疑", "user": user})
+	//}
 	return
 }
 
@@ -93,10 +91,10 @@ func (um UserDB) GetByNameLoginType(name string, loginType int) (user *entity.Us
 	}
 	//user.NickName, _ = store.DecodeString(user.NickName)
 	//user.Name, _ = store.DecodeString(user.Name)
-	hashStr := um.computeUserCheckData(user)
-	if hashStr != user.CheckData {
-		functions.AddWarnLog(log.Fields{"msg": "该条数据完整性校验不通过，存在篡改嫌疑", "user": user})
-	}
+	//hashStr := um.computeUserCheckData(user)
+	//if hashStr != user.CheckData {
+	//	functions.AddWarnLog(log.Fields{"msg": "该条数据完整性校验不通过，存在篡改嫌疑", "user": user})
+	//}
 	return
 }
 
@@ -163,14 +161,14 @@ func (um UserDB) List(req *request.UserList) (users []entity.User, total int64, 
 		functions.AddErrLog(log.Fields{"err": err, "msg": "mysql查询策略列表失败"})
 		errCode = errcode.UserNotFound
 	}
-	for _, user := range users {
-		//users[i].NickName, _ = store.DecodeString(user.NickName)
-		//users[i].Name, _ = store.DecodeString(user.Name)
-		hashStr := um.computeUserCheckData(&user)
-		if user.CheckData != hashStr {
-			functions.AddWarnLog(log.Fields{"msg": "该条数据完整性校验不通过，存在篡改嫌疑", "user": user})
-		}
-	}
+	//for _, user := range users {
+	//users[i].NickName, _ = store.DecodeString(user.NickName)
+	//users[i].Name, _ = store.DecodeString(user.Name)
+	//hashStr := um.computeUserCheckData(&user)
+	//if user.CheckData != hashStr {
+	//	functions.AddWarnLog(log.Fields{"msg": "该条数据完整性校验不通过，存在篡改嫌疑", "user": user})
+	//}
+	//}
 	return
 }
 
@@ -193,10 +191,10 @@ func (um UserDB) GetByNameAndSerialNum(name, serialNum string) (user *entity.Use
 	}
 	//user.NickName, _ = store.DecodeString(user.NickName)
 	//user.Name, _ = store.DecodeString(user.Name)
-	hashStr := um.computeUserCheckData(user)
-	if hashStr != user.CheckData {
-		functions.AddWarnLog(log.Fields{"msg": "该条数据完整性校验不通过，存在篡改嫌疑", "user": user})
-	}
+	//hashStr := um.computeUserCheckData(user)
+	//if hashStr != user.CheckData {
+	//	functions.AddWarnLog(log.Fields{"msg": "该条数据完整性校验不通过，存在篡改嫌疑", "user": user})
+	//}
 	return
 }
 
@@ -263,7 +261,7 @@ func (um UserDB) Count() (total int64, err error) {
 // @contact.email gjing1st@gmail.com
 // @date 2023/6/8 9:49
 func (um UserDB) Save(user *entity.User) (err error) {
-	user.CheckData = um.computeUserCheckData(user)
+	//user.CheckData = um.computeUserCheckData(user)
 	if user.PwdUpdatedAt.IsZero() {
 		user.PwdUpdatedAt = time.Now()
 	}
@@ -279,7 +277,7 @@ func (um UserDB) Save(user *entity.User) (err error) {
 }
 
 func (um UserDB) UpdatePwd(user *entity.User) (err error) {
-	user.CheckData = um.computeUserCheckData(user)
+	//user.CheckData = um.computeUserCheckData(user)
 	if user.PwdUpdatedAt.IsZero() {
 		user.PwdUpdatedAt = time.Now()
 	}
@@ -294,11 +292,23 @@ func (um UserDB) UpdatePwd(user *entity.User) (err error) {
 	return
 }
 
-func (um UserDB) computeUserCheckData(user *entity.User) string {
-	if !config.Config.Base.EnableIntegrity {
-		return ""
+//func (um UserDB) computeUserCheckData(user *entity.User) string {
+//	if !config.Config.Base.EnableIntegrity {
+//		return ""
+//	}
+//	data := fmt.Sprintf("%x%s%x", user.RoleId, user.UserSerialNum, user.UserPub)
+//	hashStr := fmt.Sprintf("%x", store.ComputeCheckData([]byte(data)))
+//	return hashStr
+//}
+
+func (um UserDB) GetByPhone(phone string) (user *entity.User, errCode error) {
+	err := store.DB.Where("phone = ? ", phone).First(&user).Error
+	if err != nil {
+		functions.AddWarnLog(log.Fields{"err": err, "msg": "查询" + phone + "管理员失败"})
+		//if errors.Is(err, errcode.ErrRecordNotFound) {
+		//	return user, errcode.UserNotFound
+		//}
+		return user, errcode.DBFindErr
 	}
-	data := fmt.Sprintf("%x%s%x", user.RoleId, user.UserSerialNum, user.UserPub)
-	hashStr := fmt.Sprintf("%x", store.ComputeCheckData([]byte(data)))
-	return hashStr
+	return
 }

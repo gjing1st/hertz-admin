@@ -17,6 +17,7 @@ func initUser(r *route.RouterGroup) {
 	api := r.Group("user")
 	api.POST("login", userController.Login)
 	r.POST("logout", userController.Logout)
+	r.POST("register", userController.Register)
 
 }
 func initLoginUser(r *route.RouterGroup) {

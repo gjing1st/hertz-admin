@@ -55,8 +55,8 @@ func (us *UserService) CreateUser(req *request.UserCreate) (errCode error) {
 	}
 	var data entity.User
 	data.Name = req.Name
-	data.NickName = req.Name
-	data.UserSerialNum = req.Serial
+	//data.NickName = req.Name
+	//data.UserSerialNum = req.Serial
 	data.Password = gm.EncryptPasswd(data.Name, req.Pin)
 	data.LoginType = req.LoginType
 	data.RoleId = req.RoleId
@@ -137,8 +137,8 @@ func (us *UserService) Login(req *request.UserLogin) (res response.UserLogin, er
 // @email: gjing1st@gmail.com
 // @date: 2022/12/28 17:25
 // @success:
-func (us *UserService) List(req *request.UserList) (list interface{}, total int64, errCode error) {
-	list, total, errCode = userDB.List(req)
+func (us *UserService) List(req *request.UserList) (list interface{}, total int64, err error) {
+	list, total, err = userDB.List(req)
 	return
 }
 
@@ -149,10 +149,10 @@ func (us *UserService) List(req *request.UserList) (list interface{}, total int6
 // @email: gjing1st@gmail.com
 // @date: 2022/12/29 20:19
 // @success:
-func (us *UserService) InfoByName(name string) (list interface{}, total int64, errCode error) {
-	user, errCode1 := userDB.GetByName(name)
-	if errCode1 != nil {
-		errCode = errCode1
+func (us *UserService) InfoByName(name string) (list interface{}, total int64, err error) {
+	user, err1 := userDB.GetByName(name)
+	if err1 != nil {
+		err = err1
 		return
 	}
 	total = 1
@@ -168,8 +168,8 @@ func (us *UserService) InfoByName(name string) (list interface{}, total int64, e
 // @email: gjing1st@gmail.com
 // @date: 2022/12/30 11:26
 // @success:
-func (us *UserService) DeleteById(userid int) (errCode error) {
-	errCode = userDB.DeleteById(nil, userid)
+func (us *UserService) DeleteById(userid int) (err error) {
+	err = userDB.DeleteById(nil, userid)
 	return
 }
 
@@ -180,8 +180,8 @@ func (us *UserService) DeleteById(userid int) (errCode error) {
 // @email: gjing1st@gmail.com
 // @date: 2023/3/17 16:18
 // @success:
-func (us *UserService) DeleteUser(req *request.UserDelete) (errCode error) {
-	errCode = userDB.DeleteById(nil, req.ID)
+func (us *UserService) DeleteUser(req *request.UserDelete) (err error) {
+	err = userDB.DeleteById(nil, req.ID)
 	return
 }
 
@@ -207,4 +207,17 @@ func (us *UserService) ChangePasswd(req *request.ChangePasswd, username string, 
 	//密码错误次数归0
 	_ = userDB.ClearErrNum(int(user.ID))
 	return err
+}
+
+func (us *UserService) Register(req *request.UserRegister) (err error) {
+	user, err1 := userDB.GetByPhone(req.Phone)
+	if err1 == nil && user.ID != 0 {
+		err = errcode.UserNameExist
+		return
+	}
+	user.Name = req.Username
+	user.Phone = req.Phone
+	user.NickName = req.Username
+	user.Password = gm.EncryptPasswd(user.Name, req.Password)
+	return userDB.Save(user)
 }

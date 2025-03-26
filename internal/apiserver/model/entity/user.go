@@ -13,9 +13,9 @@ import (
 
 // User 用户表
 type User struct {
-	ID   uint   `gorm:"primaryKey" json:"id"`
-	Name string `json:"name" gorm:"column:name;comment:用户名;type:varchar(255);NOT NULL;"`
-	//Name          string                `json:"name" gorm:"column:name;comment:用户名;uniqueIndex:user_name;type:varchar(64);NOT NULL;"`
+	ID        uint   `gorm:"primaryKey" json:"id"`
+	Name      string `json:"name" gorm:"column:name;comment:用户名;type:varchar(255);NOT NULL;"`
+	Phone     string `json:"phone" gorm:"column:phone;comment:手机号;uniqueIndex:phone;type:varchar(20);NOT NULL;"`
 	NickName  string `json:"nick_name" gorm:"column:nick_name;comment:昵称;type:varchar(255);NOT NULL;"`
 	RoleId    int    `json:"role_id" gorm:"column:role_id;comment:角色类型;" `
 	Password  string `json:"-"  gorm:"column:password;comment:密码;type:varchar(255);"`

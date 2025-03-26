@@ -74,3 +74,9 @@ type UserDelete struct {
 	Username string `json:"name"`
 	KeySn    string `json:"keysn"`
 }
+
+type UserRegister struct {
+	Username string `json:"username" binding:"required"`
+	Password string `json:"password" binding:"required"`
+	Phone    string `json:"phone" binding:"required"`
+}
