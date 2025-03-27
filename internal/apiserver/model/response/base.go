@@ -76,6 +76,14 @@ func Failed(c *app.RequestContext, code error) {
 	}
 	c.JSON(http.StatusInternalServerError, res)
 }
+func FailedWithData(c *app.RequestContext, code error, data interface{}, msg string) {
+	res := Response{
+		code,
+		data,
+		msg,
+	}
+	c.JSON(http.StatusInternalServerError, res)
+}
 
 // FailWithLog
 // @description: 返回操作失败，并记录失败日志

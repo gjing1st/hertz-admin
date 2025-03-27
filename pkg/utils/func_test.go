@@ -18,3 +18,18 @@ func TestDiffNatureDays(t *testing.T) {
 	d := DiffNatureDays(t1, t2)
 	fmt.Println(d)
 }
+
+func TestName(t *testing.T) {
+	for i := 1; i < 100; i++ {
+		is := false
+		for j := 2; j < i; j++ {
+			if i%j == 0 {
+				is = true
+				break
+			}
+		}
+		if !is {
+			fmt.Println(i)
+		}
+	}
+}

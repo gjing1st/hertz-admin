@@ -269,6 +269,10 @@ func (um UserDB) Save(user *entity.User) (err error) {
 	//user.Name, _ = store.EncodeString(user.Name)
 	err = store.DB.Save(&user).Error
 	if err != nil {
+		if errcode.IsDuplicateKeyError(err) {
+			err = errcode.UserNameExist
+			return
+		}
 		functions.AddErrLog(log.Fields{"err": err, "msg": "mysql保存管理员失败"})
 		err = errcode.DBFindErr
 		return
@@ -304,10 +308,10 @@ func (um UserDB) UpdatePwd(user *entity.User) (err error) {
 func (um UserDB) GetByPhone(phone string) (user *entity.User, errCode error) {
 	err := store.DB.Where("phone = ? ", phone).First(&user).Error
 	if err != nil {
-		functions.AddWarnLog(log.Fields{"err": err, "msg": "查询" + phone + "管理员失败"})
-		//if errors.Is(err, errcode.ErrRecordNotFound) {
-		//	return user, errcode.UserNotFound
-		//}
+		if errors.Is(err, errcode.ErrRecordNotFound) {
+			return user, nil
+		}
+		functions.AddWarnLog(log.Fields{"err": err, "msg": "查询" + phone + "用户失败"})
 		return user, errcode.DBFindErr
 	}
 	return

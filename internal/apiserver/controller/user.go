@@ -19,6 +19,7 @@ import (
 )
 
 type UserController struct {
+	BaseController
 }
 
 var userService = service.UserService{}
@@ -41,21 +42,20 @@ func (uc *UserController) Login(ctx context.Context, c *app.RequestContext) {
 	}
 	res, err := userService.Login(&req)
 	content := "登录"
+	ctx = context.WithValue(ctx, "content", "登录")
+	ctx = context.WithValue(ctx, "req", req)
+	ctx = context.WithValue(ctx, "err", err)
 	if err != nil {
 		if errors.Is(err, errcode.UserNotFound) {
+			uc.FailWithLog(ctx, c)
 			response.FailWithLog(err, content, nil, c)
 			return
 		}
-		//response.FailWithLog(errCode, global.LoginFail, req.Name, content, nil, c)
-		response.FailWithDataLog(res, err, content, nil, c)
+		uc.FailWithLog(ctx, c)
+		//response.FailWithDataLog(res, err, content, nil, c)
 	} else {
 		response.OkWithDataLog(res, content, nil, c)
 	}
-}
-
-func (uc *UserController) LoginTest(ctx context.Context, c *app.RequestContext) {
-	testId := ctx.Value("testId")
-	fmt.Println("testId====", testId)
 }
 
 // Logout godoc
@@ -71,25 +71,26 @@ func (uc *UserController) Logout(ctx context.Context, c *app.RequestContext) {
 	auth := c.GetHeader("Authorization")
 	token := strings.Replace(string(auth), "Bearer ", "", 1)
 	service.TokenService{}.RemoveToken(token)
-	content := "登出"
-	response.OkWithLog("", content, c)
+	ctx = context.WithValue(ctx, "content", "登出")
+	uc.OkWithLog(ctx, c)
 
 }
 
 func (uc *UserController) Register(ctx context.Context, c *app.RequestContext) {
 	var req request.UserRegister
 	if err := c.BindJSON(&req); err != nil {
+		fmt.Println(err)
 		response.ParamErr(c)
 		return
 	}
 
 	err := userService.Register(&req)
 	ctx = context.WithValue(ctx, "content", "用户注册")
-	ctx = context.WithValue(ctx, "req", req)
+	//ctx = context.WithValue(ctx, "req", req)
 	ctx = context.WithValue(ctx, "err", err)
 	if err != nil {
-		response.FailWithLog(err, "用户注册", req, c)
+		uc.FailWithLog(ctx, c)
 		return
 	}
-	response.OkWithDataLog("", "用户注册", req, c)
+	uc.OkWithLog(ctx, c)
 }

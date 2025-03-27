@@ -15,7 +15,6 @@ import (
 func initLoginRouter(r *route.RouterGroup) {
 	//需要登录权限路由组
 	r.Use(middleware.LoginRequired())
-	initLoginUser(r)
 	initSys(r)
 	//其他权限需要在具体路由组中分别注册中间件
 	initAuthAdminRouter(r)  //需要管理员权限
