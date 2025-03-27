@@ -22,15 +22,15 @@ var (
 
 // Info exposes information about the version used for the current running code.
 type Info struct {
-	Major        string `json:"major,omitempty"`
-	Minor        string `json:"minor,omitempty"`
-	GitVersion   string `json:"gitVersion,omitempty"`
-	GitCommit    string `json:"gitCommit,omitempty"`
-	GitTreeState string `json:"gitTreeState,omitempty"`
-	BuildDate    string `json:"buildDate,omitempty"`
-	GoVersion    string `json:"goVersion,omitempty"`
-	Compiler     string `json:"compiler,omitempty"`
-	Platform     string `json:"platform,omitempty"`
+	Major        string `json:"major,omitzero"`
+	Minor        string `json:"minor,omitzero"`
+	GitVersion   string `json:"gitVersion,omitzero"`
+	GitCommit    string `json:"gitCommit,omitzero"`
+	GitTreeState string `json:"gitTreeState,omitzero"`
+	BuildDate    string `json:"buildDate,omitzero"`
+	GoVersion    string `json:"goVersion,omitzero"`
+	Compiler     string `json:"compiler,omitzero"`
+	Platform     string `json:"platform,omitzero"`
 }
 
 // Get returns an Info object with all the information about the current running code.

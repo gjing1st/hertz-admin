@@ -1,10 +1,10 @@
 module github.com/gjing1st/hertz-admin
 
-go 1.24
+go 1.24.1
 
 require (
 	github.com/bluele/gcache v0.0.2
-	github.com/bytedance/sonic v1.12.8
+	github.com/bytedance/sonic v1.13.2
 	github.com/cloudwego/hertz v0.9.6
 	github.com/google/uuid v1.6.0
 	github.com/hertz-contrib/cors v0.1.0
@@ -13,7 +13,7 @@ require (
 	github.com/sirupsen/logrus v1.9.3
 	github.com/swaggo/files v1.0.1
 	github.com/swaggo/swag v1.16.4
-	golang.org/x/crypto v0.33.0
+	golang.org/x/crypto v0.36.0
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 	gorm.io/driver/mysql v1.5.7
 	gorm.io/gorm v1.25.12
@@ -25,7 +25,7 @@ require (
 	github.com/BurntSushi/toml v1.4.0 // indirect
 	github.com/KyleBanks/depth v1.2.1 // indirect
 	github.com/bytedance/gopkg v0.1.1 // indirect
-	github.com/bytedance/sonic/loader v0.2.3 // indirect
+	github.com/bytedance/sonic/loader v0.2.4 // indirect
 	github.com/cloudwego/base64x v0.1.5 // indirect
 	github.com/cloudwego/netpoll v0.6.4 // indirect
 	github.com/fsnotify/fsnotify v1.8.0 // indirect
@@ -47,8 +47,8 @@ require (
 	golang.org/x/arch v0.14.0 // indirect
 	golang.org/x/exp v0.0.0-20250215185904-eff6e970281f // indirect
 	golang.org/x/net v0.35.0 // indirect
-	golang.org/x/sys v0.30.0 // indirect
-	golang.org/x/text v0.22.0 // indirect
+	golang.org/x/sys v0.31.0 // indirect
+	golang.org/x/text v0.23.0 // indirect
 	golang.org/x/tools v0.30.0 // indirect
 	google.golang.org/protobuf v1.36.5 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
