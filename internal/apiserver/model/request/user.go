@@ -27,10 +27,10 @@ type UserCreate struct {
 
 // UserLogin 用户登录请求
 type UserLogin struct {
-	Name      string `json:"name" binding:"required"`
+	//Name      string `json:"name" binding:"required"`
+	Phone     string `json:"phone" binding:"required"`
 	LoginType int    `json:"login_type"`
-	Pin       string `json:"pin"`
-	Password  string `json:"pwd"`
+	Password  string `json:"password" binding:"required"`
 }
 
 // UserList 用户列表

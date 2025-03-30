@@ -11,7 +11,6 @@ import (
 	"github.com/gjing1st/hertz-admin/internal/apiserver/model/request"
 	"github.com/gjing1st/hertz-admin/internal/apiserver/model/response"
 	"github.com/gjing1st/hertz-admin/internal/apiserver/store/database"
-	"github.com/gjing1st/hertz-admin/internal/pkg/config"
 	"github.com/gjing1st/hertz-admin/internal/pkg/functions"
 	"github.com/gjing1st/hertz-admin/pkg/errcode"
 	"github.com/gjing1st/hertz-admin/pkg/utils/gm"
@@ -72,7 +71,7 @@ func (us *UserService) CreateUser(req *request.UserCreate) (errCode error) {
 // @date: 2022/12/27 17:05
 // @success:
 func (us *UserService) Login(req *request.UserLogin) (res response.UserLogin, err error) {
-	user, err := userDB.GetByNameLoginType(req.Name, req.LoginType)
+	user, err := userDB.GetByPhone(req.Phone)
 	if err != nil {
 		return
 	}
@@ -80,25 +79,22 @@ func (us *UserService) Login(req *request.UserLogin) (res response.UserLogin, er
 		err = errcode.UserNotFound
 		return
 	}
-	if len(req.Password) == 0 {
-		req.Password = req.Pin
-	}
 	//验证密码
-	ok := gm.CheckPasswd(req.Name, req.Password, user.Password)
+	ok := gm.CheckPasswd(user.Name, req.Password, user.Password)
 	if !ok {
-		if user.ErrNum >= config.Config.Base.PwdMaxErrNum {
-			err = errcode.PwdMaxErr
-			return
-		}
-		//记录密码错误次数
-		retryCount := config.Config.Base.PwdMaxErrNum - user.ErrNum - 1
-		if retryCount < 0 {
-			res.RetryCount = 0
-		} else {
-			res.RetryCount = retryCount
-			err = userDB.AddErrNum(int(user.ID))
-		}
-		err = errcode.PwdErr
+		//if user.ErrNum >= config.Config.Base.PwdMaxErrNum {
+		//	err = errcode.PwdMaxErr
+		//	return
+		//}
+		////记录密码错误次数
+		//retryCount := config.Config.Base.PwdMaxErrNum - user.ErrNum - 1
+		//if retryCount < 0 {
+		//	res.RetryCount = 0
+		//} else {
+		//	res.RetryCount = retryCount
+		//	err = userDB.AddErrNum(int(user.ID))
+		//}
+		err = errcode.PasswordErr
 		return
 	} else {
 		//密码错误次数归0
