@@ -1,7 +1,9 @@
 #
 ## 🌱1 基本介绍
 ### 1.1 项目简介
-基于字节hertz的后台管理框架,整体架构布局采用 `51k` Star的 `https://github.com/golang-standards/project-layout` 规范
+基于`Golang`最强`http`框架：字节跳动`hertz` 开发的项目，本项目不单单是一个后台管理框架，更是一个`Golang`项目基础框架。  
+整体架构布局采用 `51k` Star的 [Go项目标准布局](https://github.com/golang-standards/project-layout) 规范。
+
 ## 📝2. 使用说明
 ### 2.1 目录结构
 ```shell
@@ -68,7 +70,7 @@ swag init -g ./cmd/ha/main.go
 - 信创服务器`k8s`&`KubeSphere`布道者、`KubeSphere`离线部署布道者
 - 公众号：`编码如写诗`，作者：`天行1st`，微信：`sd_zdhr`
 
-可扫描下方二维码，添加我微信或关注公众号，添加好友请备注 **ha**
+可扫描下方二维码，添加我微信或关注公众号，添加好友请备注 **`ha`**
 
 | <img src="https://s21.ax1x.com/2025/04/09/pEgcFRU.png" width="600px" align="left"/> |
 | ------------------------------------------------------------ |
