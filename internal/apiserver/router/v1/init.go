@@ -27,7 +27,6 @@ func InitApi(h *server.Hertz) {
 	{
 		//无需登录即可访问
 		initWithoutConfigRouter(apiV1)
-		initCategory(apiV1)
 		initUser(apiV1)
 	}
 	{

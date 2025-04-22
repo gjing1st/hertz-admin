@@ -9,6 +9,4 @@ package dict
 const (
 	RoleIdSuperAdmin = 1 //超级管理员
 	RoleIdAdmin      = 2 //管理员
-	RoleIdAudit      = 3 //审计员
-	RoleIdOperator   = 4 //操作员
 )

@@ -28,7 +28,6 @@ var (
 func registerTables(db *gorm.DB) {
 	err := db.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(
 		//系统模块表
-		entity.Category{},
 		entity.Config{},
 		entity.User{},
 		entity.SysLog{},
@@ -75,7 +74,6 @@ func initTableData(db *gorm.DB) (err error) {
 	var initTables []InitTable
 	initTables = append(initTables,
 		//此处添加需要初始化的实现表
-		InitCategory{},
 		InitConfig{},
 		InitUser{},
 	)

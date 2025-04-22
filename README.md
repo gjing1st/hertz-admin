@@ -72,5 +72,5 @@ swag init -g ./cmd/ha/main.go
 
 可扫描下方二维码，添加我微信或关注公众号，添加好友请备注 **`ha`**
 
-| <img src="https://s21.ax1x.com/2025/04/09/pEgcFRU.png" width="600px" align="left"/> |
+| <img src="https://s21.ax1x.com/2025/04/22/pE55UBR.png" width="600px" align="left"/> |
 | ------------------------------------------------------------ |
