@@ -5,7 +5,7 @@ go 1.24.1
 require (
 	github.com/bluele/gcache v0.0.2
 	github.com/bytedance/sonic v1.13.2
-	github.com/cloudwego/hertz v0.9.6
+	github.com/cloudwego/hertz v0.10.0
 	github.com/go-sql-driver/mysql v1.9.2
 	github.com/google/uuid v1.6.0
 	github.com/hertz-contrib/cors v0.1.0
