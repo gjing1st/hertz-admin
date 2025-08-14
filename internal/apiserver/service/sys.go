@@ -30,54 +30,41 @@ func (ss *SysService) ServerStatus() (res response.ServerStatus, errCode error) 
 	res.ServiceStatus = dict.ServiceStatusInit
 	res.RunStatus = dict.RunStatusAbnormal
 	var wg sync.WaitGroup
-	//wg.Add(4)
 	//TODO 需要在此补充需要检查的设备运行状态
-	wg.Add(4)
-	//serviceStatus := make(chan bool, 3)
 	serviceStatus := make(chan bool, 1)
 	runStatus := make(chan bool, 3)
 	var err error
-	go func() {
-		//1. 是否存在设备密钥
-		defer wg.Done()
-		//TODO
+	wg.Go(func() {
 		if err != nil {
 			serviceStatus <- false
 			return
 		}
 		serviceStatus <- true
-	}()
-
-	go func() {
-		//运行状态
-		defer wg.Done()
+	})
+	wg.Go(func() {
 		//TODO
 		if err != nil {
 			runStatus <- false
 			return
 		}
 		runStatus <- true
-	}()
-	go func() {
-		//运行状态
-		defer wg.Done()
+	})
+	wg.Go(func() {
 		//TODO
 		if err != nil {
 			runStatus <- false
 			return
 		}
 		runStatus <- true
-	}()
-	go func() {
-		//运行状态
-		defer wg.Done()
+	})
+	wg.Go(func() {
 		//TODO
 		if err != nil {
 			runStatus <- false
 			return
 		}
 		runStatus <- true
-	}()
+	})
 
 	wg.Wait()
 	//运行状态
