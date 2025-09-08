@@ -1,9 +1,10 @@
 package config
 
 import (
+	"os"
+
 	log "github.com/sirupsen/logrus"
 	"gopkg.in/natefinch/lumberjack.v2"
-	"os"
 )
 
 func InitLogger(level string, output string, dir string, caller bool) {

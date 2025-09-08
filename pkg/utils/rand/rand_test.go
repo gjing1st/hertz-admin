@@ -8,6 +8,7 @@ package rand
 
 import (
 	"fmt"
+	"sync"
 	"testing"
 	"time"
 )
@@ -19,6 +20,17 @@ func TestStr(t *testing.T) {
 		s := GoogleUUID32()
 		fmt.Println(s)
 	}
+	var wg sync.WaitGroup
+	for range 10 {
+
+		wg.Go(func() {
+			//time.Sleep(time.Nanosecond)
+			s1 := generateRandomString(20)
+			fmt.Println(s1)
+		})
+
+	}
+	wg.Wait()
 	//time.Sleep(time.Nanosecond)
 	fmt.Println(time.Since(t1))
 }

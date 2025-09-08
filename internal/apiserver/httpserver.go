@@ -3,6 +3,9 @@ package apiserver
 import (
 	"context"
 	"fmt"
+	"net/http"
+	"time"
+
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/middlewares/server/recovery"
 	"github.com/cloudwego/hertz/pkg/app/server"
@@ -14,8 +17,6 @@ import (
 	"github.com/hertz-contrib/swagger"
 	log "github.com/sirupsen/logrus"
 	swaggerFiles "github.com/swaggo/files"
-	"net/http"
-	"time"
 )
 
 // HttpStart

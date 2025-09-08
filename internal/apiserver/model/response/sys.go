@@ -38,21 +38,6 @@ type AutoUpdateConfig struct {
 	Time        string `json:"time"`
 }
 
-type Backup struct {
-	Period int `json:"period"`
-}
-
 type PwdValidDate struct {
 	ValidDate int `json:"valid_date"`
-}
-
-type PlatformConfig struct {
-	Rate         int    `json:"rate"`     //周期
-	Province     string `json:"province"` //省
-	City         string `json:"city"`     //市
-	CSMPIP       string `json:"csmp_ip"`
-	Appid        string `json:"appid"`
-	AppSecret    string `json:"app_secret"`
-	TenantSecret string `json:"tenant_secret"` //用户口令
-	TenantKey    string `json:"tenant_key"`    //用户id
 }

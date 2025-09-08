@@ -8,19 +8,17 @@ package service
 
 import (
 	"encoding/json"
+	"time"
+
 	"github.com/gjing1st/hertz-admin/internal/apiserver/model/dict"
 	"github.com/gjing1st/hertz-admin/internal/apiserver/model/response"
-	"github.com/gjing1st/hertz-admin/internal/apiserver/store"
 	"github.com/gjing1st/hertz-admin/internal/apiserver/store/cache"
 	"github.com/gjing1st/hertz-admin/internal/apiserver/store/database"
-	"github.com/gjing1st/hertz-admin/internal/apiserver/store/database/initdata"
 	"github.com/gjing1st/hertz-admin/internal/pkg/config"
 	"github.com/gjing1st/hertz-admin/internal/pkg/functions"
 	"github.com/gjing1st/hertz-admin/pkg/errcode"
 	"github.com/gjing1st/hertz-admin/pkg/utils"
 	log "github.com/sirupsen/logrus"
-	"gorm.io/gorm"
-	"time"
 )
 
 type ConfigService struct {
@@ -132,56 +130,6 @@ func (cs *ConfigService) GetRunDate() (res response.SysRunDate, errCode error) {
 	res.Minute = int(d % time.Hour / time.Minute)
 	res.Hour = int(h % 24)
 	res.Day = int(h / 24)
-	return
-}
-
-// SysReset
-// @description: 恢复出厂设置
-// @param:
-// @author: GJing
-// @email: gjing1st@gmail.com
-// @date: 2022/12/30 13:48
-// @success:
-func (cs *ConfigService) SysReset() (err error) {
-	//初始化状态
-	//errCode = cs.SetInitStep(dict.InitStepReset)
-	//if err != nil {
-	//	return err
-	//}
-	err = store.DB.Transaction(func(tx *gorm.DB) error {
-		//清理缓存
-		store.GC.Purge()
-		//删除管理员
-		//err = userMysql.ResetUser(tx)
-		//if err != nil {
-		//	return err
-		//}
-		////清空日志记录
-		//err = sysLogMysql.TruncateTable(tx)
-		//if err != nil {
-		//	return err
-		//}
-		////配置信息
-		//err = configDB.TruncateTable(tx)
-		//if err != nil {
-		//	return err
-		//}
-		////清理白名单
-		//err = whitelistDB.TruncateTable(tx)
-		//if err != nil {
-		//	return err
-		//}
-		//_ = util.Forbidden()
-		var initConfig initdata.InitConfig
-		err = initConfig.InitializeData(tx)
-		if err != nil {
-			return err
-		}
-
-		//TODO 删除其他数据
-		return err
-	})
-
 	return
 }
 

@@ -14,19 +14,8 @@ type UserLogin struct {
 	PwdDue bool `json:"pwd_due"`
 }
 
-type UKeyInfo struct {
-	PubKey             string `json:"pub_key"`
-	CommonName         string `json:"common_name"`
-	OrganizationalUnit string `json:"ou"`
-	SerialNumber       string `json:"serial_number"`
-}
-
 type ChangePwd struct {
 	RetryCount int `json:"retry_count"`
-}
-
-type MaxAdmin struct {
-	MaxNum int `json:"max_num"`
 }
 
 // KeyQuery 查询ukey是否存在

@@ -7,10 +7,11 @@
 package functions
 
 import (
-	"github.com/gjing1st/hertz-admin/version"
-	log "github.com/sirupsen/logrus"
 	"runtime"
 	"strconv"
+
+	"github.com/gjing1st/hertz-admin/version"
+	log "github.com/sirupsen/logrus"
 )
 
 // AddErrLog

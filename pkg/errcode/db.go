@@ -2,6 +2,7 @@ package errcode
 
 import (
 	"errors"
+
 	"github.com/go-sql-driver/mysql"
 )
 

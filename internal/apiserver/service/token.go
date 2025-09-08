@@ -7,10 +7,11 @@
 package service
 
 import (
+	"strconv"
+
 	"github.com/gjing1st/hertz-admin/internal/apiserver/model/entity"
 	"github.com/gjing1st/hertz-admin/pkg/utils"
 	"github.com/gjing1st/hertz-admin/pkg/utils/rand"
-	"strconv"
 )
 
 type TokenService struct {

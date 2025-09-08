@@ -8,26 +8,24 @@
 package utils
 
 import (
-	"archive/zip"
 	"bufio"
 	"bytes"
 	"crypto/md5"
 	"encoding/hex"
 	"errors"
 	"fmt"
-	"github.com/gjing1st/hertz-admin/internal/pkg/functions"
-	"github.com/gjing1st/hertz-admin/pkg/utils/global"
-	log "github.com/sirupsen/logrus"
 	"io"
 	"math"
-	"os"
 	"os/exec"
-	"path/filepath"
 	"regexp"
 	"strconv"
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/gjing1st/hertz-admin/internal/pkg/functions"
+	"github.com/gjing1st/hertz-admin/pkg/utils/global"
+	log "github.com/sirupsen/logrus"
 
 	"golang.org/x/crypto/ssh"
 )
@@ -80,93 +78,6 @@ func ReserveNumber(f float64, m int) string {
 		}
 	}
 	return s
-}
-
-// @description:	压缩文件夹
-// @param:			dir 文件夹路径 ex:F:\project\Go\ChineseMedicine\ChineseMedicine\adminApi\public\image
-// @param:			zipFile 压缩后的文件夹路径和名称 ex: ./test.zip
-// @author:		GJing
-// @email:			gjing1st@gmail.com
-// @date:			2021/1/13 15:17
-// @success:
-// @remark:	相对路径压缩后可能导致里面目录名称错误，可使用绝对路径。具体原因未知。str, _ := os.Getwd()获取当前程序运行所在目录，str拼接相对路径
-func zipDir(dir, zipFile string) {
-	// TODO 此加解压有问题，使用中医中最新的加解压
-	fz, err := os.Create(zipFile)
-	if err != nil {
-		log.Fatalf("Create zip file failed: %s\n", err.Error())
-	}
-	defer fz.Close()
-
-	w := zip.NewWriter(fz)
-	defer w.Close()
-
-	filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
-		if !info.IsDir() {
-			fDest, err := w.Create(path[len(dir)+1:])
-			if err != nil {
-				log.Printf("Create failed: %s\n", err.Error())
-				return nil
-			}
-			fSrc, err := os.Open(path)
-			if err != nil {
-				log.Printf("Open failed: %s\n", err.Error())
-				return nil
-			}
-			defer fSrc.Close()
-			_, err = io.Copy(fDest, fSrc)
-			if err != nil {
-				log.Printf("Copy failed: %s\n", err.Error())
-				return nil
-			}
-		}
-		return nil
-	})
-}
-
-// UnzipDir
-//
-//	@description:	解压缩
-//	@param:zipFile	压缩文件路径 ./test.zip
-//	@param:dir		需要解压到的指定文件夹目录 ex :F:\dumps_copy
-//	@author:		GJing
-//	@email:			gjing1st@gmail.com
-//	@date:			2021/1/13 15:19
-//	@success:
-func UnzipDir(zipFile, dir string) {
-
-	r, err := zip.OpenReader(zipFile)
-	if err != nil {
-		log.Println("zipFile", zipFile)
-		log.Fatalf("Open zip file failed: %s\n", err.Error())
-	}
-	defer r.Close()
-
-	for _, f := range r.File {
-		func() {
-			path := dir + string(filepath.Separator) + f.Name
-			os.MkdirAll(filepath.Dir(path), 0755)
-			fDest, err := os.Create(path)
-			if err != nil {
-				log.Printf("Create failed: %s\n", err.Error())
-				return
-			}
-			defer fDest.Close()
-
-			fSrc, err := f.Open()
-			if err != nil {
-				log.Printf("Open failed: %s\n", err.Error())
-				return
-			}
-			defer fSrc.Close()
-
-			_, err = io.Copy(fDest, fSrc)
-			if err != nil {
-				log.Printf("Copy failed: %s\n", err.Error())
-				return
-			}
-		}()
-	}
 }
 
 // Round
@@ -353,63 +264,6 @@ func RunCommand(name string, arg ...string) (err error) {
 		return
 	}
 	return
-}
-
-// WriteFile
-//
-//	@description:
-//	@param:
-//	@author:	GJing
-//	@email:		gjing1st@gmail.com
-//	@date:		2022/9/2 17:52
-//	@success:
-func WriteFile(fileName, s string) (err error) {
-	file, err := os.OpenFile(fileName, os.O_WRONLY|os.O_CREATE, os.ModePerm)
-	if err != nil {
-		log.Println("文件打开失败", err)
-		return
-	}
-	//及时关闭file句柄
-	defer file.Close()
-	//写入文件时，使用带缓存的 *Writer
-	write := bufio.NewWriter(file)
-	_, err = write.WriteString(s)
-	write.Flush()
-	return
-}
-
-// PathExists
-//
-//	@description:	判断文件是否存在
-//	@param:
-//	@author:	Zq
-//	@email:		zhengqiang@tna.cn
-//	@date:		2022/10/19 17:52
-//	@success:
-func PathExists(path string) (bool, error) {
-	_, err := os.Stat(path)
-	if err == nil {
-		return true, nil
-	}
-	if os.IsNotExist(err) {
-		return false, nil
-	}
-	return false, err
-}
-
-// LogField
-//
-//	@description:	日志字段
-//	@param:
-//	@author:	GJing
-//	@email:		gjing1st@gmail.com
-//	@date:		2022/11/1 15:35
-//	@success:
-func LogField(err error, msg string) log.Fields {
-	return log.Fields{
-		"err": err,
-		"msg": msg,
-	}
 }
 
 // DiffNatureDays

@@ -7,13 +7,14 @@
 package service
 
 import (
+	"sync"
+
 	"github.com/gjing1st/hertz-admin/internal/apiserver/model/dict"
 	"github.com/gjing1st/hertz-admin/internal/apiserver/model/response"
 	"github.com/gjing1st/hertz-admin/internal/pkg/functions"
 	"github.com/gjing1st/hertz-admin/pkg/errcode"
 	"github.com/gjing1st/hertz-admin/pkg/utils"
 	log "github.com/sirupsen/logrus"
-	"sync"
 )
 
 type SysService struct {
