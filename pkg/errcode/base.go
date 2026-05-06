@@ -41,5 +41,6 @@ const (
 )
 
 const (
-	HaUserNotLogin = 1<<iota + HaServer + HaUserCode
+	HaUserNotLogin  = 1<<iota + HaServer + HaUserCode
+	HaUserForbidden //没有权限
 )

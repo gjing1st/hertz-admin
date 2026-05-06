@@ -36,7 +36,7 @@ var userService = service.UserService{}
 // @Router /user/login [post]
 func (uc *UserController) Login(ctx context.Context, c *app.RequestContext) {
 	var req request.UserLogin
-	if err := c.Bind(&req); err != nil {
+	if err := c.BindJSON(&req); err != nil {
 		response.ParamErr(c)
 		return
 	}

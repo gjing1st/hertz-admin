@@ -26,6 +26,8 @@ func (e Err) Error() string {
 		//用户相关
 	case errors.Is(e, HaUserNotLogin):
 		return "用户未登录或登录已失效，请重新登录"
+	case errors.Is(e, HaUserForbidden):
+		return "无权访问"
 		//用户相关
 	case errors.Is(e, NoToken), errors.Is(e, TokenExpired):
 		return "请重新登录"

@@ -94,7 +94,7 @@ func FailedWithData(c *app.RequestContext, code error, data interface{}, msg str
 // @date: 2022/12/27 16:20
 // @success:
 func FailWithLog(err error, content string, req interface{}, c *app.RequestContext) {
-	code, ok := err.(error)
+	code, ok := errors.AsType[errcode.Err](err)
 	if !ok {
 		code = errcode.ErrCode
 	}
@@ -114,7 +114,7 @@ func FailWithLog(err error, content string, req interface{}, c *app.RequestConte
 // @date: 2023/2/9 17:48
 // @success:
 func FailWithDataLog(data interface{}, err error, content string, req interface{}, c *app.RequestContext) {
-	code, ok := err.(error)
+	code, ok := errors.AsType[errcode.Err](err)
 	if !ok {
 		code = errcode.ErrCode
 	}
@@ -182,7 +182,7 @@ func ParamErr(c *app.RequestContext) {
 // @date: 2022/12/28 18:02
 // @success:
 func Unauthorized(err error, c *app.RequestContext) {
-	code, ok := err.(error)
+	code, ok := errors.AsType[errcode.Err](err)
 	if !ok {
 		code = errcode.ErrCode
 	}
@@ -201,14 +201,10 @@ func Unauthorized(err error, c *app.RequestContext) {
 // @date: 2022/12/28 18:05
 // @success:
 func Forbidden(err error, c *app.RequestContext) {
-	code, ok := err.(error)
-	if !ok {
-		code = errcode.ErrCode
-	}
 	c.JSON(http.StatusForbidden, Response{
-		code,
+		errcode.HaUserForbidden,
 		nil,
-		code.Error(),
+		errcode.HaUserForbidden.Error(),
 	})
 }
 
