@@ -8,13 +8,13 @@ package service
 
 import (
 	"encoding/json"
+	"github.com/gjing1st/hertz-admin/version"
 	"time"
 
 	"github.com/gjing1st/hertz-admin/internal/apiserver/model/dict"
 	"github.com/gjing1st/hertz-admin/internal/apiserver/model/response"
 	"github.com/gjing1st/hertz-admin/internal/apiserver/store/cache"
 	"github.com/gjing1st/hertz-admin/internal/apiserver/store/database"
-	"github.com/gjing1st/hertz-admin/internal/pkg/config"
 	"github.com/gjing1st/hertz-admin/internal/pkg/functions"
 	"github.com/gjing1st/hertz-admin/pkg/errcode"
 	"github.com/gjing1st/hertz-admin/pkg/utils"
@@ -140,10 +140,6 @@ func (cs *ConfigService) GetRunDate() (res response.SysRunDate, errCode error) {
 // @email: gjing1st@gmail.com
 // @date: 2023/1/4 9:35
 // @success:
-func (cs *ConfigService) VersionInfo() (res response.VersionInfo) {
-	res.Version, _ = cs.GetValueStr(dict.ConfigVersion)
-	res.Manufacturer = config.Config.VersionInfo.Manufacturer
-	res.Serial = config.Config.VersionInfo.Serial
-	res.DeviceModel = config.Config.VersionInfo.Serial
-	return
+func (cs *ConfigService) VersionInfo() version.Info {
+	return version.Get()
 }

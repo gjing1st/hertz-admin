@@ -21,15 +21,6 @@ type LoginTypeRes struct {
 	LoginType string `json:"login_type"`
 }
 
-// VersionInfo 版本信息
-type VersionInfo struct {
-	Manufacturer string `json:"manufacturer"` //生产厂商
-	Version      string `json:"version"`
-	Serial       string `json:"serial"` //序列号
-	//Algorithm    string `json:"algorithm"`
-	DeviceModel string `json:"device_model"` //设备型号固定
-}
-
 // InitStepValue 初始化步骤对应的值
 type InitStepValue struct {
 	User    int `json:"user"`

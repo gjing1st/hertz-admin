@@ -7,7 +7,7 @@
 ## 📝2. 使用说明
 ### 2.1 目录结构
 ```shell
-├── build # 接口文档
+├── build 
 |   ├── ci # 持续集成打包脚本
 |   └── docker # Dockerfile
 ├── cmd 
@@ -19,7 +19,7 @@
 |   └── k8s # 以k8s运行deployment配置文件
 ├── docs # 文档
 ├── internal # 项目核心内部模块
-|   ├── apiserver # api接口：MVCSS结构,路由、模型、数据库、缓存、控制器、服务等
+|   ├── apiserver # api接口：MCSS结构,路由、模型、数据库、缓存、控制器、服务等
 |   └── pkg # 内部公共模块：中间件、日志、配置等
 ├── pkg # 公共模块：错误、工具等
 ├── scripts # 脚本
