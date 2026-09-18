@@ -8,7 +8,7 @@ services:
     ports:
       - "9680:9680"
     volumes:
-      - ./configs:/bin/config
+      - ./configs:/configs
       - /etc/localtime:/etc/localtime
     networks:
       - adminnet

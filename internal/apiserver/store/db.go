@@ -119,7 +119,7 @@ func InitDB() {
 		//	config.Config.Database.UserName,
 		//	config.Config.Database.Password,
 		//)
-		//dsn = "clickhouse://tna:Dked@213@192.168.200.83:9000/gaf?dial_timeout=10s&read_timeout=20s"
+		//dsn = "clickhouse://test:Test@213@192.168.200.83:9000/gaf?dial_timeout=10s&read_timeout=20s"
 
 		dsn = fmt.Sprintf("clickhouse://%s:%s@%s:%s/%s?dial_timeout=10s&read_timeout=20s",
 			config.Config.Database.UserName,
