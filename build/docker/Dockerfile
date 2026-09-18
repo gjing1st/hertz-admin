@@ -1,16 +1,13 @@
-ARG GO_VERSION=1.26.2
-ARG ALPINE_VERSION=3.23
+ARG GO_VERSION=1.27.1
+ARG ALPINE_VERSION=3.24
 FROM  golang:${GO_VERSION}-alpine${ALPINE_VERSION} AS build
 ARG LDFLAGS
 WORKDIR /src
-ENV GOPROXY https://goproxy.cn,direct
-RUN --mount=type=cache,target=/go/pkg/mod/ \
-    --mount=type=bind,source=go.sum,target=go.sum \
-    --mount=type=bind,source=go.mod,target=go.mod \
-    go mod download -x
-RUN --mount=type=cache,target=/go/pkg/mod/ \
+# 依赖已 vendor 进仓库：无需 GOPROXY、无需 go mod download，离线 / 内网环境可直接构建
+ENV GOTOOLCHAIN=local
+RUN --mount=type=cache,target=/root/.cache/go-build \
     --mount=type=bind,target=. \
-    CGO_ENABLED=0 GOOS=linux  go build -trimpath -ldflags="-s -w ${LDFLAGS}" -o /bin/server ./cmd/ha/main.go
+    CGO_ENABLED=0 GOOS=linux  go build -mod=vendor -trimpath -ldflags="-s -w ${LDFLAGS}" -o /bin/server ./cmd/ha/main.go
 
 FROM alpine:${ALPINE_VERSION}
 COPY --from=build /bin/server /bin/

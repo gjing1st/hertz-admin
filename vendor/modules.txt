@@ -1,0 +1,323 @@
+# filippo.io/edwards25519 v1.2.0
+## explicit; go 1.24.0
+filippo.io/edwards25519
+filippo.io/edwards25519/field
+# github.com/BurntSushi/toml v1.6.0
+## explicit; go 1.18
+github.com/BurntSushi/toml
+github.com/BurntSushi/toml/internal
+# github.com/KyleBanks/depth v1.2.1
+## explicit
+github.com/KyleBanks/depth
+# github.com/bluele/gcache v0.0.2
+## explicit; go 1.15
+github.com/bluele/gcache
+# github.com/bytedance/gopkg v0.1.4
+## explicit; go 1.18
+github.com/bytedance/gopkg/internal/runtimex
+github.com/bytedance/gopkg/lang/dirtmake
+github.com/bytedance/gopkg/lang/fastrand
+github.com/bytedance/gopkg/lang/mcache
+github.com/bytedance/gopkg/util/gopool
+github.com/bytedance/gopkg/util/logger
+# github.com/bytedance/sonic v1.15.4
+## explicit; go 1.18
+github.com/bytedance/sonic
+github.com/bytedance/sonic/ast
+github.com/bytedance/sonic/decoder
+github.com/bytedance/sonic/encoder
+github.com/bytedance/sonic/internal/caching
+github.com/bytedance/sonic/internal/compat
+github.com/bytedance/sonic/internal/cpu
+github.com/bytedance/sonic/internal/decoder/api
+github.com/bytedance/sonic/internal/decoder/consts
+github.com/bytedance/sonic/internal/decoder/errors
+github.com/bytedance/sonic/internal/decoder/jitdec
+github.com/bytedance/sonic/internal/decoder/optdec
+github.com/bytedance/sonic/internal/encoder
+github.com/bytedance/sonic/internal/encoder/alg
+github.com/bytedance/sonic/internal/encoder/ir
+github.com/bytedance/sonic/internal/encoder/prim
+github.com/bytedance/sonic/internal/encoder/vars
+github.com/bytedance/sonic/internal/encoder/vm
+github.com/bytedance/sonic/internal/encoder/x86
+github.com/bytedance/sonic/internal/envs
+github.com/bytedance/sonic/internal/jit
+github.com/bytedance/sonic/internal/native
+github.com/bytedance/sonic/internal/native/avx2
+github.com/bytedance/sonic/internal/native/neon
+github.com/bytedance/sonic/internal/native/sse
+github.com/bytedance/sonic/internal/native/types
+github.com/bytedance/sonic/internal/optcaching
+github.com/bytedance/sonic/internal/resolver
+github.com/bytedance/sonic/internal/rt
+github.com/bytedance/sonic/internal/utils
+github.com/bytedance/sonic/option
+github.com/bytedance/sonic/unquote
+github.com/bytedance/sonic/utf8
+# github.com/bytedance/sonic/loader v0.5.2
+## explicit; go 1.16
+github.com/bytedance/sonic/loader
+github.com/bytedance/sonic/loader/internal/abi
+github.com/bytedance/sonic/loader/internal/iasm/expr
+github.com/bytedance/sonic/loader/internal/iasm/x86_64
+github.com/bytedance/sonic/loader/internal/rt
+# github.com/cloudwego/base64x v0.1.7
+## explicit; go 1.17
+github.com/cloudwego/base64x
+github.com/cloudwego/base64x/internal/native
+github.com/cloudwego/base64x/internal/native/avx2
+github.com/cloudwego/base64x/internal/native/sse
+github.com/cloudwego/base64x/internal/rt
+# github.com/cloudwego/gopkg v0.2.0
+## explicit; go 1.20
+github.com/cloudwego/gopkg/bufiox
+github.com/cloudwego/gopkg/concurrency/gopool
+github.com/cloudwego/gopkg/net/connstate
+# github.com/cloudwego/hertz v0.10.6
+## explicit; go 1.20
+github.com/cloudwego/hertz/internal/bytesconv
+github.com/cloudwego/hertz/internal/bytestr
+github.com/cloudwego/hertz/internal/nocopy
+github.com/cloudwego/hertz/internal/stats
+github.com/cloudwego/hertz/internal/tagexpr
+github.com/cloudwego/hertz/internal/tagexpr/validator
+github.com/cloudwego/hertz/pkg/app
+github.com/cloudwego/hertz/pkg/app/client/retry
+github.com/cloudwego/hertz/pkg/app/middlewares/server/recovery
+github.com/cloudwego/hertz/pkg/app/server
+github.com/cloudwego/hertz/pkg/app/server/binding
+github.com/cloudwego/hertz/pkg/app/server/binding/internal/decoder
+github.com/cloudwego/hertz/pkg/app/server/registry
+github.com/cloudwego/hertz/pkg/app/server/render
+github.com/cloudwego/hertz/pkg/common/bytebufferpool
+github.com/cloudwego/hertz/pkg/common/compress
+github.com/cloudwego/hertz/pkg/common/config
+github.com/cloudwego/hertz/pkg/common/errors
+github.com/cloudwego/hertz/pkg/common/hlog
+github.com/cloudwego/hertz/pkg/common/json
+github.com/cloudwego/hertz/pkg/common/stackless
+github.com/cloudwego/hertz/pkg/common/timer
+github.com/cloudwego/hertz/pkg/common/tracer
+github.com/cloudwego/hertz/pkg/common/tracer/stats
+github.com/cloudwego/hertz/pkg/common/tracer/traceinfo
+github.com/cloudwego/hertz/pkg/common/utils
+github.com/cloudwego/hertz/pkg/network
+github.com/cloudwego/hertz/pkg/network/dialer
+github.com/cloudwego/hertz/pkg/network/netpoll
+github.com/cloudwego/hertz/pkg/network/standard
+github.com/cloudwego/hertz/pkg/protocol
+github.com/cloudwego/hertz/pkg/protocol/client
+github.com/cloudwego/hertz/pkg/protocol/consts
+github.com/cloudwego/hertz/pkg/protocol/http1
+github.com/cloudwego/hertz/pkg/protocol/http1/ext
+github.com/cloudwego/hertz/pkg/protocol/http1/factory
+github.com/cloudwego/hertz/pkg/protocol/http1/proxy
+github.com/cloudwego/hertz/pkg/protocol/http1/req
+github.com/cloudwego/hertz/pkg/protocol/http1/resp
+github.com/cloudwego/hertz/pkg/protocol/suite
+github.com/cloudwego/hertz/pkg/route
+github.com/cloudwego/hertz/pkg/route/consts
+github.com/cloudwego/hertz/pkg/route/param
+# github.com/cloudwego/netpoll v0.7.5
+## explicit; go 1.20
+github.com/cloudwego/netpoll
+github.com/cloudwego/netpoll/internal/runner
+# github.com/fsnotify/fsnotify v1.10.1
+## explicit; go 1.23
+github.com/fsnotify/fsnotify
+github.com/fsnotify/fsnotify/internal
+# github.com/go-openapi/jsonpointer v1.0.1
+## explicit; go 1.26.0
+github.com/go-openapi/jsonpointer
+github.com/go-openapi/jsonpointer/jsonname
+# github.com/go-openapi/jsonreference v1.0.2
+## explicit; go 1.26.0
+github.com/go-openapi/jsonreference
+github.com/go-openapi/jsonreference/internal
+# github.com/go-openapi/spec v1.0.1
+## explicit; go 1.26.0
+github.com/go-openapi/spec
+# github.com/go-openapi/swag/conv v0.29.2
+## explicit; go 1.26.0
+github.com/go-openapi/swag/conv
+# github.com/go-openapi/swag/jsonutils v0.29.2
+## explicit; go 1.26.0
+github.com/go-openapi/swag/jsonutils
+github.com/go-openapi/swag/jsonutils/adapters
+github.com/go-openapi/swag/jsonutils/adapters/ifaces
+github.com/go-openapi/swag/jsonutils/adapters/stdlib/json
+# github.com/go-openapi/swag/loading v0.29.2
+## explicit; go 1.26.0
+github.com/go-openapi/swag/loading
+# github.com/go-openapi/swag/pools v0.29.2
+## explicit; go 1.26.0
+github.com/go-openapi/swag/pools
+# github.com/go-openapi/swag/stringutils v0.29.2
+## explicit; go 1.26.0
+github.com/go-openapi/swag/stringutils
+# github.com/go-openapi/swag/typeutils v0.29.2
+## explicit; go 1.26.0
+github.com/go-openapi/swag/typeutils
+# github.com/go-openapi/swag/yamlutils v0.29.2
+## explicit; go 1.26.0
+github.com/go-openapi/swag/yamlutils
+# github.com/go-sql-driver/mysql v1.10.1
+## explicit; go 1.24.0
+github.com/go-sql-driver/mysql
+# github.com/google/uuid v1.6.0
+## explicit
+github.com/google/uuid
+# github.com/hertz-contrib/cors v0.1.0
+## explicit; go 1.16
+github.com/hertz-contrib/cors
+# github.com/hertz-contrib/swagger v0.1.1
+## explicit; go 1.18
+github.com/hertz-contrib/swagger
+# github.com/jinzhu/configor v1.2.2
+## explicit; go 1.16
+github.com/jinzhu/configor
+# github.com/jinzhu/inflection v1.0.0
+## explicit
+github.com/jinzhu/inflection
+# github.com/jinzhu/now v1.1.5
+## explicit; go 1.12
+github.com/jinzhu/now
+# github.com/klauspost/cpuid/v2 v2.4.0
+## explicit; go 1.24.0
+github.com/klauspost/cpuid/v2
+# github.com/sirupsen/logrus v1.10.2
+## explicit; go 1.23
+github.com/sirupsen/logrus
+# github.com/swaggo/files v1.0.1
+## explicit; go 1.16
+github.com/swaggo/files
+# github.com/swaggo/swag v1.16.6
+## explicit; go 1.18
+github.com/swaggo/swag
+# github.com/tidwall/gjson v1.19.0
+## explicit; go 1.23
+github.com/tidwall/gjson
+# github.com/tidwall/match v1.2.0
+## explicit; go 1.15
+github.com/tidwall/match
+# github.com/tidwall/pretty v1.2.1
+## explicit; go 1.16
+github.com/tidwall/pretty
+# github.com/twitchyliquid64/golang-asm v0.15.1
+## explicit; go 1.13
+github.com/twitchyliquid64/golang-asm/asm/arch
+github.com/twitchyliquid64/golang-asm/bio
+github.com/twitchyliquid64/golang-asm/dwarf
+github.com/twitchyliquid64/golang-asm/goobj
+github.com/twitchyliquid64/golang-asm/obj
+github.com/twitchyliquid64/golang-asm/obj/arm
+github.com/twitchyliquid64/golang-asm/obj/arm64
+github.com/twitchyliquid64/golang-asm/obj/mips
+github.com/twitchyliquid64/golang-asm/obj/ppc64
+github.com/twitchyliquid64/golang-asm/obj/riscv
+github.com/twitchyliquid64/golang-asm/obj/s390x
+github.com/twitchyliquid64/golang-asm/obj/wasm
+github.com/twitchyliquid64/golang-asm/obj/x86
+github.com/twitchyliquid64/golang-asm/objabi
+github.com/twitchyliquid64/golang-asm/src
+github.com/twitchyliquid64/golang-asm/sys
+github.com/twitchyliquid64/golang-asm/unsafeheader
+# go.yaml.in/yaml/v3 v3.0.5
+## explicit; go 1.16
+go.yaml.in/yaml/v3
+# golang.org/x/arch v0.31.0
+## explicit; go 1.26.0
+golang.org/x/arch/x86/x86asm
+# golang.org/x/crypto v0.57.0
+## explicit; go 1.26.0
+golang.org/x/crypto/blowfish
+golang.org/x/crypto/chacha20
+golang.org/x/crypto/cryptobyte
+golang.org/x/crypto/cryptobyte/asn1
+golang.org/x/crypto/curve25519
+golang.org/x/crypto/internal/alias
+golang.org/x/crypto/internal/poly1305
+golang.org/x/crypto/ssh
+golang.org/x/crypto/ssh/internal/bcrypt_pbkdf
+# golang.org/x/mod v0.41.0
+## explicit; go 1.26.0
+golang.org/x/mod/internal/lazyregexp
+golang.org/x/mod/module
+golang.org/x/mod/semver
+# golang.org/x/net v0.59.0
+## explicit; go 1.26.0
+golang.org/x/net/webdav
+golang.org/x/net/webdav/internal/xml
+# golang.org/x/sync v0.23.0
+## explicit; go 1.26.0
+golang.org/x/sync/errgroup
+# golang.org/x/sys v0.48.0
+## explicit; go 1.26.0
+golang.org/x/sys/cpu
+golang.org/x/sys/unix
+golang.org/x/sys/windows
+# golang.org/x/text v0.42.0
+## explicit; go 1.26.0
+golang.org/x/text/cases
+golang.org/x/text/internal
+golang.org/x/text/internal/language
+golang.org/x/text/internal/language/compact
+golang.org/x/text/internal/tag
+golang.org/x/text/language
+golang.org/x/text/transform
+golang.org/x/text/unicode/norm
+# golang.org/x/tools v0.50.0
+## explicit; go 1.26.0
+golang.org/x/tools/go/ast/astutil
+golang.org/x/tools/go/buildutil
+golang.org/x/tools/go/internal/cgo
+golang.org/x/tools/go/loader
+golang.org/x/tools/imports
+golang.org/x/tools/internal/event
+golang.org/x/tools/internal/event/core
+golang.org/x/tools/internal/event/keys
+golang.org/x/tools/internal/event/label
+golang.org/x/tools/internal/gocommand
+golang.org/x/tools/internal/gopathwalk
+golang.org/x/tools/internal/imports
+golang.org/x/tools/internal/modindex
+golang.org/x/tools/internal/stdlib
+# google.golang.org/protobuf v1.36.12
+## explicit; go 1.23
+google.golang.org/protobuf/encoding/protowire
+google.golang.org/protobuf/internal/detrand
+google.golang.org/protobuf/internal/encoding/messageset
+google.golang.org/protobuf/internal/errors
+google.golang.org/protobuf/internal/flags
+google.golang.org/protobuf/internal/genid
+google.golang.org/protobuf/internal/order
+google.golang.org/protobuf/internal/pragma
+google.golang.org/protobuf/internal/strs
+google.golang.org/protobuf/proto
+google.golang.org/protobuf/reflect/protoreflect
+google.golang.org/protobuf/reflect/protoregistry
+google.golang.org/protobuf/runtime/protoiface
+# gopkg.in/natefinch/lumberjack.v2 v2.2.1
+## explicit; go 1.13
+gopkg.in/natefinch/lumberjack.v2
+# gopkg.in/yaml.v3 v3.0.1
+## explicit
+gopkg.in/yaml.v3
+# gorm.io/driver/mysql v1.6.0
+## explicit; go 1.18
+gorm.io/driver/mysql
+# gorm.io/gorm v1.31.2
+## explicit; go 1.18
+gorm.io/gorm
+gorm.io/gorm/callbacks
+gorm.io/gorm/clause
+gorm.io/gorm/internal/lru
+gorm.io/gorm/internal/stmt_store
+gorm.io/gorm/logger
+gorm.io/gorm/migrator
+gorm.io/gorm/schema
+gorm.io/gorm/utils
+# gorm.io/plugin/soft_delete v1.2.1
+## explicit; go 1.15
+gorm.io/plugin/soft_delete

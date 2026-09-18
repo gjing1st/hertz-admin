@@ -30,3 +30,8 @@
 **/values.dev.yaml
 LICENSE
 README.md
+
+# vendor/ 必须完整进入构建上下文。
+# 注意上面的 `**/obj`：它会连带排除 vendor/github.com/twitchyliquid64/golang-asm/obj，
+# 那是 Go 源码包（69 个 .go 文件），不是编译产物。缺了它 `go build -mod=vendor` 会直接编译失败。
+!vendor/**
